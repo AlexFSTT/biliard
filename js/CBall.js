@@ -30,7 +30,7 @@ function CBall(iType,oParentContainer, oTexture){
         _bOnTable = false;
         _bDrag = false;
         _iEdgeCollisionCount = 0;
-	_iBallRadius = BALL_RADIUS-0.5; // Ball Radius;
+	_iBallRadius = BALL_RADIUS-8; // Ball Radius;
         _oInHole = null;
         
         _fSideEffectForce = 0;

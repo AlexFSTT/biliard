@@ -157,7 +157,7 @@ var ON_PRESS_UP_BALL   = "pressup";
 
 var POOL_HOLE_RADIUS = 30;
 var DIST_BALL_HOLE = 66;
-var BALL_DIAMETER = isMobile() ? 32 : 28;
+var BALL_DIAMETER = isMobile() ? 35 : 29;
 var BALL_DIAMETER_QUADRO = Math.pow(BALL_DIAMETER,2);
 var BALL_RADIUS = BALL_DIAMETER/2;
 var BALL_RADIUS_QUADRO = Math.pow(BALL_RADIUS,2);
