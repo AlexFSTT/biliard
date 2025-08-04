@@ -98,6 +98,9 @@ function CPlayerGUI(iX,iY,szName,oParentContainer){
             _oBallsContainer.addChild(oIcon);
             _aBallIcons[iBallNum] = oIcon;
         }
+
+        var szLabel = (szSuit === "solid") ? "SOLIDS" : "STRIPES";
+        _oTextName.refreshText(_szName + " - " + szLabel);
     };
 
     this.removeBall = function(iBall){

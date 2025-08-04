@@ -24,6 +24,9 @@ function CGame(){
     var _iDirStickCommand;
     var _iDirStickSpeedCommand;
     var _aPottedBallsBeforeAssign;
+    var _iTurnTime;
+    var _oTimerText;
+    var _oTurnTimerInterval;
     
     this._init = function(){
         _oGameState = new GameState();
@@ -77,7 +80,7 @@ function CGame(){
         
         _oPlayer1  = new CPlayerGUI(CANVAS_WIDTH/2 - 400, iY,TEXT_PLAYER1,s_oStage);
         _oPlayer2  = new CPlayerGUI(CANVAS_WIDTH/2 + 400, iY,TEXT_PLAYER2,s_oStage);
-        
+
         if (_oGameState.getCurTurn() === 1) {
                 _oPlayer1.highlight();
                 _oPlayer2.unlight();
@@ -85,6 +88,14 @@ function CGame(){
                 _oPlayer2.highlight();
                 _oPlayer1.unlight();
         }
+
+        _oTimerText = new CTLText(s_oStage,
+                    CANVAS_WIDTH/2 - 50, iY, 100, 40,
+                    30, "center", "#fff", FONT_GAME, 1,
+                    0, 0,
+                    "20",
+                    true, true, false,
+                    false );
         
         if(s_iGameMode === GAME_MODE_NINE){
             this.setNextBallToHit(1);
@@ -226,10 +237,37 @@ function CGame(){
             _oShotPowerBar.hide();
         }
     };
-    
+
     this.showShotBar = function(){
         if(s_bMobile){
             _oShotPowerBar.show();
+        }
+        this.startTurnTimer();
+    };
+
+    this.startTurnTimer = function(){
+        _iTurnTime = 20;
+        if(!_oTimerText){
+            return;
+        }
+        _oTimerText.refreshText(_iTurnTime);
+        if(_oTurnTimerInterval){
+            clearInterval(_oTurnTimerInterval);
+        }
+        _oTurnTimerInterval = setInterval(function(){
+            _iTurnTime--;
+            _oTimerText.refreshText(_iTurnTime);
+            if(_iTurnTime <= 0){
+                s_oGame.stopTurnTimer();
+                s_oGame.changeTurn(false);
+            }
+        },1000);
+    };
+
+    this.stopTurnTimer = function(){
+        if(_oTurnTimerInterval){
+            clearInterval(_oTurnTimerInterval);
+            _oTurnTimerInterval = null;
         }
     };
 
@@ -243,13 +281,14 @@ function CGame(){
             _oShotPowerBar.addEventListener(ON_PRESS_MOVE_POWER_BAR, this._onPressMovePowerBar, this);
             _oShotPowerBar.addEventListener(ON_PRESS_UP_POWER_BAR, this._onPressUpPowerBar, this);
             _oShotPowerBar.show();
-            
+
         }
-         
+
          if(_oInteractiveHelp){
             _oInteractiveHelp.unload();
             _oInteractiveHelp = null;
-         }   
+         }
+        this.startTurnTimer();
     };
     
     this._onPressDownStickCommand = function(iDir){
@@ -264,7 +303,8 @@ function CGame(){
     
     this.unload = function(oCbCompleted = null, oCbScope){
         _bUpdate = false;
-        
+        this.stopTurnTimer();
+
         var oFade = new createjs.Shape();
         oFade.graphics.beginFill("black").drawRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT); 
         oFade.alpha = 0;
