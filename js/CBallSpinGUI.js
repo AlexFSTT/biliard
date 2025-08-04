@@ -48,10 +48,6 @@ function CBallSpinGUI(iX,iY,oParentContainer){
     };
     
     this._onRelease = function(evt){
-        if(((s_iPlayerMode === GAME_MODE_CPU) && (s_oGame.getCurTurn() === 2))){
-            return;
-        }
-        
         var pPoint = _oBg.globalToLocal(evt.stageX, evt.stageY);
         if(distance(new CVector2(evt.stageX, evt.stageY),_vPos)<_iRadius){
             _oToken.x = pPoint.x-_iRadius;
