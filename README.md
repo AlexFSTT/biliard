@@ -5,10 +5,9 @@
 
 ## 📋 Executive Summary
 
-This document outlines the complete transformation of an existing 8 Ball Pool HTML5 game into a modern, tournament-focused multiplayer platform. The project removes CPU vs Player modes and replaces them with live tournament competition, real-time multiplayer, and comprehensive optimization.
+This document outlines the complete transformation of an existing 8 Ball Pool HTML5 game into a modern, tournament-focused multiplayer platform featuring live tournament competition, real-time multiplayer, and comprehensive optimization.
 
 ### 🎯 Key Objectives
-- **Remove CPU Mode:** Eliminate single-player AI opponent functionality
 - **Add Tournament System:** Implement live multiplayer tournaments with brackets
 - **Optimize Performance:** Modernize codebase for better performance and maintainability
 - **Real-time Multiplayer:** Add WebSocket-based synchronization and anti-cheat
@@ -21,7 +20,6 @@ This document outlines the complete transformation of an existing 8 Ball Pool HT
 ### Original Game Structure
 ```
 Original Features:
-├── Single Player vs CPU (3 difficulty levels)
 ├── Two Player Local Mode
 ├── Multiple Game Modes (8-ball, 9-ball, Time mode)
 ├── 3D Physics Engine (Three.js)
@@ -135,12 +133,6 @@ const GAME_CONFIG = Object.freeze({
 
 ### Phase 2: Game Logic Optimization (Week 3-4)
 
-#### **Removed Components**
-- ❌ CPU difficulty selection (`CDifficultyMenu.js`)
-- ❌ AI opponent logic in `CGame.js`
-- ❌ Single-player game modes
-- ❌ Offline gameplay systems
-
 #### **Enhanced Components**
 - ✅ **Multiplayer Physics Sync:** Real-time ball position synchronization
 - ✅ **Tournament Integration:** In-game tournament progression
@@ -152,7 +144,7 @@ const GAME_CONFIG = Object.freeze({
 #### **New Menu System**
 ```javascript
 Menu Options:
-├── 🏆 JOIN TOURNAMENT    → Browse active tournaments
+├── 🏆 TOURNAMENTS (COMING SOON) → Preview upcoming tournaments
 ├── ⚡ Multiplayer        → Custom 1 vs 1
 ├── 🎯 PRACTICE MODE      → Offline skill practice
 └── 🏅 LEADERBOARD       → Global rankings
@@ -185,7 +177,7 @@ const GAME_CONFIG = Object.freeze({
     ASPECT_RATIO: 16/9
   },
 
-  // Game Modes (CPU mode removed)
+    // Game Modes
   MODES: {
     TOURNAMENT: 0,
     PRACTICE: 1,
@@ -431,7 +423,7 @@ class CMain extends createjs.EventDispatcher {
 ```javascript
 /**
  * Tournament-Focused Main Menu
- * Replaces the old CPU vs Player menu with tournament options
+ * Provides multiplayer and tournament options
  */
 
 class CMainMenuScene extends createjs.EventDispatcher {
@@ -448,13 +440,13 @@ class CMainMenuScene extends createjs.EventDispatcher {
 
   _createMenuButtons() {
     const buttonData = [
-      {
-        id: 'join_tournament',
-        text: 'JOIN TOURNAMENT',
-        icon: '🏆',
-        color: '#4CAF50',
-        action: () => this._showTournamentList()
-      },
+        {
+          id: 'tournaments',
+          text: 'TOURNAMENTS (COMING SOON)',
+          icon: '🏆',
+          color: '#4CAF50',
+          action: () => this._showComingSoon()
+        },
       {
         id: 'multyplayer', 
         text: '1vs1',
@@ -503,7 +495,6 @@ class CMainMenuScene extends createjs.EventDispatcher {
 - [ ] Implement `CTournamentManager` class
 - [ ] Create `CNetworkManager` for real-time communication
 - [ ] Update `CMain.js` with new architecture
-- [ ] Remove CPU-related code from existing files
 
 ### **Week 3-4: Tournament System**
 - [ ] Build tournament backend API
@@ -618,10 +609,10 @@ Performance Targets:
 
 ### **Immediate Actions (This Week)**
 1. **Set up development environment** with new architecture
-2. **Replace settings.js** with optimized configuration  
+2. **Replace settings.js** with optimized configuration
 3. **Implement CTournamentManager** basic functionality
 4. **Create CNetworkManager** WebSocket foundation
-5. **Update main menu** to remove CPU options
+5. **Introduce "Tournaments (Coming Soon)" menu entry**
 
 ### **Short-term Goals (Next 2 Weeks)**
 1. **Complete tournament system** implementation
