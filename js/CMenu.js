@@ -140,9 +140,9 @@ function CMenu(){
         console.log("Tournament mode is not implemented yet");
     };
 
-    this._onAudioToggle = function(){
-        Howler.mute(s_bAudioActive);
-        s_bAudioActive = !s_bAudioActive;
+    this._onAudioToggle = function(bActive){
+        s_bAudioActive = bActive;
+        Howler.mute(!s_bAudioActive);
     };
 
     this.resetFullscreenBut = function(){
