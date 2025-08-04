@@ -7,6 +7,7 @@ function CMenu(){
 
     var _oBg;
     var _oButPlayTwo;
+    var _oButPlayTournament;
     var _oAudioToggle;
     var _oButCredits;
     var _oFade;
@@ -23,6 +24,10 @@ function CMenu(){
         _pStartPosButTwo = {x: CANVAS_WIDTH/2 - 250, y: CANVAS_HEIGHT - 220};
         _oButPlayTwo = new CGfxButton(_pStartPosButTwo.x, _pStartPosButTwo.y, s_oSpriteLibrary.getSprite('vs_man_panel'), s_oStage);
         _oButPlayTwo.addEventListener(ON_MOUSE_UP, this._onButPlayTwo, this);
+
+        _pStartPosButTournament = {x: CANVAS_WIDTH/2 + 250, y: CANVAS_HEIGHT - 220};
+        _oButPlayTournament = new CGfxButton(_pStartPosButTournament.x, _pStartPosButTournament.y, s_oSpriteLibrary.getSprite('vs_pc_panel'), s_oStage);
+        _oButPlayTournament.addEventListener(ON_MOUSE_UP, this._onButPlayTournament, this);
 
         // Audio toggle
         if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
@@ -85,6 +90,7 @@ function CMenu(){
     this.unload = function(){
         _oButCredits.unload();
         _oButPlayTwo.unload();
+        _oButPlayTournament.unload();
 
         if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
             _oAudioToggle.unload();
@@ -109,10 +115,11 @@ function CMenu(){
         }
         _oButCredits.setPosition(_pStartPosCredits.x + s_iOffsetX, _pStartPosCredits.y + s_iOffsetY);
         _oButPlayTwo.setPosition(_pStartPosButTwo.x, _pStartPosButTwo.y - s_iOffsetY);
+        _oButPlayTournament.setPosition(_pStartPosButTournament.x, _pStartPosButTournament.y - s_iOffsetY);
     };
 
     this._onButPlayTwo = function(){
-        s_iPlayerMode = GAME_MODE_TWO;
+        s_iPlayerMode = PLAYER_MODE_TWO;
         s_iGameMode = GAME_MODE_EIGHT;
         this._onExit(function(){
             s_oMenu.unload();
@@ -123,6 +130,11 @@ function CMenu(){
 
     this._onButCreditsRelease = function(){
         new CCreditsPanel();
+    };
+
+    this._onButPlayTournament = function(){
+        s_iPlayerMode = PLAYER_MODE_TOURNAMENT;
+        console.log("Tournament mode is not implemented yet");
     };
 
     this._onAudioToggle = function(){
