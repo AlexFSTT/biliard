@@ -4,10 +4,12 @@ function CMenu(){
     var _pStartPosFullscreen;
     var _pStartPosButSingle;
     var _pStartPosButTwo;
+    var _pStartPosButTournament;
 
     var _oBg;
     var _oButPlaySingle;
     var _oButPlayTwo;
+    var _oButPlayTournament;
     var _oAudioToggle;
     var _oButCredits;
     var _oFade;
@@ -28,6 +30,10 @@ function CMenu(){
         _pStartPosButTwo = {x: CANVAS_WIDTH/2 + 250, y: CANVAS_HEIGHT - 220};
         _oButPlayTwo = new CGfxButton(_pStartPosButTwo.x, _pStartPosButTwo.y, s_oSpriteLibrary.getSprite('vs_man_panel'), s_oStage);
         _oButPlayTwo.addEventListener(ON_MOUSE_UP, this._onButPlayTwo, this);
+
+        _pStartPosButTournament = {x: CANVAS_WIDTH/2, y: CANVAS_HEIGHT - 220};
+        _oButPlayTournament = new CGfxButton(_pStartPosButTournament.x, _pStartPosButTournament.y, s_oSpriteLibrary.getSprite('tournament_panel'), s_oStage);
+        _oButPlayTournament.addEventListener(ON_MOUSE_UP, this._onButPlayTournament, this);
 
         // Audio toggle
         if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
@@ -91,6 +97,7 @@ function CMenu(){
         _oButPlaySingle.unload();
         _oButCredits.unload();
         _oButPlayTwo.unload();
+        _oButPlayTournament.unload();
 
         if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
             _oAudioToggle.unload();
@@ -116,6 +123,7 @@ function CMenu(){
         _oButCredits.setPosition(_pStartPosCredits.x + s_iOffsetX, _pStartPosCredits.y + s_iOffsetY);
         _oButPlaySingle.setPosition(_pStartPosButSingle.x, _pStartPosButSingle.y - s_iOffsetY);
         _oButPlayTwo.setPosition(_pStartPosButTwo.x, _pStartPosButTwo.y - s_iOffsetY);
+        _oButPlayTournament.setPosition(_pStartPosButTournament.x, _pStartPosButTournament.y - s_iOffsetY);
     };
 
     this._onButPlaySingle = function(){
@@ -134,6 +142,15 @@ function CMenu(){
             s_oMenu.unload();
             s_oMain.gotoGame();
             $(s_oMain).trigger("start_session");
+        });
+    };
+
+    this._onButPlayTournament = function(){
+        s_iPlayerMode = GAME_MODE_TOURNAMENT;
+        s_iGameMode = GAME_MODE_EIGHT;
+        this._onExit(function(){
+            s_oMenu.unload();
+            // TODO: Implement tournament flow navigation
         });
     };
 
