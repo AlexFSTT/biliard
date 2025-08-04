@@ -35,8 +35,8 @@ var GAME_MODE_EIGHT = 0;
 var GAME_MODE_NINE = 1;
 var GAME_MODE_TIME = 2;
 
-var GAME_MODE_CPU = 0;
-var GAME_MODE_TWO = 1;
+var GAME_MODE_TWO = 0;
+var GAME_MODE_TOURNAMENT = 1; // Placeholder for future tournament logic
 
 var STATE_TABLE_PLACE_CUE_BALL_BREAKSHOT  = 0;
 var STATE_TABLE_PLACE_CUE_BALL = 1;
@@ -158,15 +158,6 @@ var HOLE_CENTER_POS = [
                         {x:1185,y:628},
                         {x:640, y:639},
                         {x:95,  y:628}
-                    ];
-
-var HOLE_CPU_POINTS = [
-                        {x:105, y:97},
-                        {x:640, y:80},
-                        {x:1173,y:97},
-                        {x:1173,y:613},
-                        {x:640, y:632},
-                        {x:105, y:613}
                     ];
 
 var MAX_FORCE_PER_DISTANCE = 850;
@@ -296,7 +287,6 @@ var DEBUG_SHOW_TABLE_CENTER_SHAPE    = false;
 var DEBUG_SHOW_HOLE_CENTER_POS_SHAPE = false;
 var DEBUG_SHOW_EDGE_TABLE            = false;
 var DEBUG_SHOW_RECT_COLLISION        = false;
-var DEBUG_SHOW_CPU_BALL_TRAJECTORY   = false;
 var DEBUG_SHOW_PREDICT_TRAJECTORY_COLLISION = false;
 var SHOW_TRAJECTORY_UNSUCCESSFUL_SHOTS = false;
 
