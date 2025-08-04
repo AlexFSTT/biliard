@@ -1374,7 +1374,7 @@ function CTable(oParentContainer, oCpuDifficultyParams){
                                 this._assignSuit();
                                 this.respotCueBall();
                                 for (var i = 0; i < _aBallsInHoleInCurShot.length; i++) {
-                                    if (!s_oGame.isLegalShotFor8Ball(_aBallsInHoleInCurShot[i])) {
+                                    if (!s_oGame.getGameState().isLegalShotFor8Ball(_aBallsInHoleInCurShot[i])) {
                                         _aBallsToPotPlayers[s_oGame.getNextTurn()-1]--;
                                     }else {
                                         _aBallsToPotPlayers[s_oGame.getCurTurn()-1]--;
@@ -1383,7 +1383,7 @@ function CTable(oParentContainer, oCpuDifficultyParams){
                             }else {
                                     //verify if it is a legal shot for the current player
                                    
-                                    if( (_aCueBallCollision.length !== 0) && (s_oGame.isLegalShotFor8Ball(_aCueBallCollision[0].getNumber(),
+                                    if( (_aCueBallCollision.length !== 0) && (s_oGame.getGameState().isLegalShotFor8Ball(_aCueBallCollision[0].getNumber(),
                                                                         _aBallsToPotPlayers[s_oGame.getCurTurn()-1])) ){
                                             //verify if any ball has been potted
                                             if (_aBallsInHoleInCurShot.length > 0) {
@@ -1397,13 +1397,13 @@ function CTable(oParentContainer, oCpuDifficultyParams){
                                                             _oStick.setVisible(!(s_iPlayerMode === GAME_MODE_CPU && s_oGame.getCurTurn() === 2));
                                                     }else{
                                                             //if a player pot first an opponent ball it's foul 
-                                                            if (s_oGame.isLegalShotFor8Ball(_aBallsInHoleInCurShot[0])) {
+                                                            if (s_oGame.getGameState().isLegalShotFor8Ball(_aBallsInHoleInCurShot[0])) {
                                                                     //console.log("FIRST BALL POTTED IS LEGAL");
                                                                     var bLegalShot = true;
                                                                     _aBallsToPotPlayers[s_oGame.getCurTurn()-1]--;
                                                                     if (_aBallsInHoleInCurShot.length > 1) {
                                                                             for (var i = 1; i < _aBallsInHoleInCurShot.length; i++) {
-                                                                                    if (!s_oGame.isLegalShotFor8Ball(_aBallsInHoleInCurShot[i])) {
+                                                                                    if (!s_oGame.getGameState().isLegalShotFor8Ball(_aBallsInHoleInCurShot[i])) {
                                                                                             bLegalShot = false;
                                                                                         
                                                                                             _aBallsToPotPlayers[s_oGame.getNextTurn()-1]--;
@@ -1433,7 +1433,7 @@ function CTable(oParentContainer, oCpuDifficultyParams){
                                                                 bFault = true;
                                                                 this.respotCueBall();
                                                                 for (var i = 0; i < _aBallsInHoleInCurShot.length; i++) {
-                                                                    if (!s_oGame.isLegalShotFor8Ball(_aBallsInHoleInCurShot[i])) {
+                                                                    if (!s_oGame.getGameState().isLegalShotFor8Ball(_aBallsInHoleInCurShot[i])) {
                                                                             _aBallsToPotPlayers[s_oGame.getNextTurn()-1]--;
                                                                     }else {
                                                                             _aBallsToPotPlayers[s_oGame.getCurTurn()-1]--;
@@ -1453,7 +1453,7 @@ function CTable(oParentContainer, oCpuDifficultyParams){
                                             }
                                     }else {
                                             for (var i = 0; i < _aBallsInHoleInCurShot.length; i++) {
-                                                    if (!s_oGame.isLegalShotFor8Ball(_aBallsInHoleInCurShot[i])) {
+                                                    if (!s_oGame.getGameState().isLegalShotFor8Ball(_aBallsInHoleInCurShot[i])) {
                                                             _aBallsToPotPlayers[s_oGame.getNextTurn()-1]--;
                                                     }else {
                                                             _aBallsToPotPlayers[s_oGame.getCurTurn()-1]--;

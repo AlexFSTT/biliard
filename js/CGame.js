@@ -1,9 +1,6 @@
 function CGame(){
     var _bUpdate = false;
-    var _bSuitAssigned;
-    var _iCurTurn;                //Current Turn in game 
-    var _iWinStreak;
-    var _aSuitePlayer;
+    var _oGameState;
     
     var _oScenario;
     var _oGameOverPanel;
@@ -15,7 +12,6 @@ function CGame(){
     var _oContainerGame;
     var _oContainerTable;
     var _oContainerInterface;
-    var _iScore;    
     
     var _oInteractiveHelp;
     
@@ -29,14 +25,10 @@ function CGame(){
     var _iDirStickSpeedCommand;
     
     this._init = function(){
-        _iCurTurn = 1;
-        _iWinStreak = 0;
-        _bSuitAssigned = false;
+        _oGameState = new GameState();
         _bHoldStickCommand = false;
         _iDirStickCommand = 1;
         _iDirStickSpeedCommand = COMMAND_STICK_START_SPEED;
-        
-        _iScore = 0;
         
         switch(s_iGameMode) {
             case GAME_MODE_NINE: {
@@ -84,7 +76,7 @@ function CGame(){
             _oScoreGUI = new CScoreGUI(CANVAS_WIDTH/2, iY, s_oStage);
         }
         
-        if (_iCurTurn === 1) {
+        if (_oGameState.getCurTurn() === 1) {
                 _oPlayer1.highlight();
                 _oPlayer2.unlight();
         }else {
@@ -294,8 +286,7 @@ function CGame(){
     };
     
     this.reset = function(){
-        _iCurTurn = 1;
-        _bSuitAssigned = false;
+        _oGameState.reset();
     };
     
     this.refreshButtonPos = function(){
@@ -316,7 +307,7 @@ function CGame(){
     
     //set the lowest ball currently on the table in the player interface
     this.setNextBallToHit = function(iNextBall) {
-        if (_iCurTurn === 1) {
+        if (_oGameState.getCurTurn() === 1) {
                 _oPlayer2.setBallVisible(false);
                 _oPlayer1.setBall(iNextBall);
         }else {
@@ -327,23 +318,22 @@ function CGame(){
     
     //change player turn
     this.changeTurn = function(bFault) {
-            if (_iCurTurn === 1) {
-                    _iCurTurn = 2;
-                    
-                    if(!s_oTable.isCpuTurn()){
-                        s_oGame.showShotBar();
-                    }
-                    
-                    _oPlayer2.highlight();
-                    _oPlayer1.unlight();
-            }else {
-                    _iCurTurn = 1;
+            _oGameState.changeTurn();
+
+            if (_oGameState.getCurTurn() === 1) {
                     _oPlayer1.highlight();
                     _oPlayer2.unlight();
                     s_oGame.showShotBar();
+            }else {
+                    _oPlayer2.highlight();
+                    _oPlayer1.unlight();
+
+                    if(!s_oTable.isCpuTurn()){
+                        s_oGame.showShotBar();
+                    }
             }
             s_oInterface.resetSpin();
-            
+
             if(bFault){
                 new CEffectText(TEXT_FAULT, s_oStageUpper3D);
             }else{
@@ -352,29 +342,8 @@ function CGame(){
     };
     
     this.assignSuits = function(iBallNumber) {
-        _aSuitePlayer = new Array();
-        if (iBallNumber < 8) {
-                if (_iCurTurn === 1) {
-                        _aSuitePlayer[0] = "solid";
-                        _aSuitePlayer[1] = "stripes";
-                        this.setBallInInterface("solid");
-                }else {
-                        _aSuitePlayer[0] = "stripes";
-                        _aSuitePlayer[1] = "solid";
-                        this.setBallInInterface("stripes",);
-                }
-        }else {
-                if (_iCurTurn === 1) {
-                        _aSuitePlayer[0] = "stripes";
-                        _aSuitePlayer[1] = "solid";
-                        this.setBallInInterface("stripes");
-                }else {
-                        _aSuitePlayer[0] = "solid";
-                        _aSuitePlayer[1] = "stripes";
-                        this.setBallInInterface("solid");
-                }
-        }
-        _bSuitAssigned = true;
+        _oGameState.assignSuits(iBallNumber);
+        this.setBallInInterface(_oGameState.getSuitForPlayer(1));
     };
     
     this.setBallInInterface = function(szSuites1) {
@@ -388,35 +357,17 @@ function CGame(){
     };
     
     this.isLegalShotFor8Ball = function(iBall,iNumBallToPot) {
-    if (_bSuitAssigned) {			
-            if ( (_aSuitePlayer[_iCurTurn-1] == "solid") && (iBall<8) ) {
-                    return true;
-            }else {
-                    if ( (_aSuitePlayer[_iCurTurn-1] == "stripes") && (iBall > 8) ) {
-                            return true;
-                    }else if( (iBall == 8) && (iNumBallToPot==0) ){
-                                    return true;
-                            }else {
-                                    return false;
-                            }
-            }
-    }else {
-            if (iBall != 8) {
-                    return true;
-            }else {
-                    return false;
-            }
-    }
+        return _oGameState.isLegalShotFor8Ball(iBall, iNumBallToPot);
     };
     
     this.increaseWinStreak = function(){
-            _iWinStreak++;
+            _oGameState.increaseWinStreak();
             //oWinStreak.text = "Win Streak: "+CAppBiliardo.m_iWinStreak;
     };
-        
+
     this.resetWinStreak = function() {
-	_iWinStreak = 0;
-	//oWinStreak.text = "Win Streak: "+_iWinStreak;
+        _oGameState.resetWinStreak();
+        //oWinStreak.text = "Win Streak: "+_oGameState.toJSON().winStreak;
     };
       
     this.gameOver = function(szText){
@@ -426,7 +377,7 @@ function CGame(){
     };
     
     this.showWinPanel = function(szText){
-        var iScore = s_iGameMode === GAME_MODE_CPU ? _iScore : undefined;
+        var iScore = s_iGameMode === GAME_MODE_CPU ? _oGameState.getScore() : undefined;
         
         _oGameOverPanel.show(szText, iScore);
         $("#canvas_upper_3d").css("pointer-events", "initial");
@@ -454,29 +405,29 @@ function CGame(){
         if(!_oScoreGUI){
             return;
         }
-        
-        var iNewScore = _iScore + iVal;
-        
-        _iScore = iNewScore < 0 ? 0 : iNewScore;
-        
-        _oScoreGUI.refreshScore(_iScore);
+
+        _oGameState.updateScore(iVal);
+
+        var iScore = _oGameState.getScore();
+
+        _oScoreGUI.refreshScore(iScore);
         _oScoreGUI.highlight();
     };
     
     this.getCurTurn = function(){
-        return _iCurTurn;
+        return _oGameState.getCurTurn();
     };
-    
+
     this.getNextTurn = function() {
-        return _iCurTurn===1?2:1;
+        return _oGameState.getNextTurn();
     };
-    
+
     this.getSuiteForCurPlayer = function() {
-        return _aSuitePlayer[_iCurTurn-1];
+        return _oGameState.getSuitForCurPlayer();
     };
-    
+
     this.isSuiteAssigned  = function(){
-        return _bSuitAssigned;
+        return _oGameState.isSuitAssigned();
     };
     
     this.getPlayer1Name = function(){
@@ -485,6 +436,18 @@ function CGame(){
     
     this.getPlayer2Name = function(){
         return _oPlayer2.getPlayerName();
+    };
+
+    this.getGameState = function(){
+        return _oGameState;
+    };
+
+    this.toJSON = function(){
+        return _oGameState.toJSON();
+    };
+
+    this.applyAction = function(oAction){
+        _oGameState.applyAction(oAction);
     };
     
     this._updateInput = function(){
