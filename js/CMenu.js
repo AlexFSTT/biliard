@@ -2,10 +2,9 @@ function CMenu(){
     var _pStartPosAudio;
     var _pStartPosCredits;
     var _pStartPosFullscreen;
-    var _pStartPosButPractice;
-    var _pStartPosButOffline;
-    var _pStartPosButOnline;
-    var _pStartPosButTournament;
+    var _aCardStartPos;
+    var _cardW = 400;
+    var _cardH = 180;
 
     var _oBg;
     var _oButPractice;
@@ -24,25 +23,23 @@ function CMenu(){
         _oBg = createBitmap(s_oSpriteLibrary.getSprite('bg_menu'));
         s_oStage.addChild(_oBg);
 
-        // Mode buttons
-        var oSpriteBtn = s_oSpriteLibrary.getSprite('but_text');
-        var iStartY = CANVAS_HEIGHT/2 - 150;
+        // Card layout buttons
+        var spacingX = 50;
+        var spacingY = 40;
+        var startX = CANVAS_WIDTH / 2 - _cardW - spacingX / 2;
+        var startY = CANVAS_HEIGHT / 2 - _cardH - spacingY / 2;
 
-        _pStartPosButPractice = {x: CANVAS_WIDTH/2, y: iStartY};
-        _oButPractice = new CTextButton(_pStartPosButPractice.x, _pStartPosButPractice.y, oSpriteBtn, "SOLO PRACTICE", FONT_GAME, "#fff", 40, "center", s_oStage);
-        _oButPractice.addEventListener(ON_MOUSE_UP, this._onButPractice, this);
+        _aCardStartPos = [
+            {x: startX, y: startY},
+            {x: startX + _cardW + spacingX, y: startY},
+            {x: startX, y: startY + _cardH + spacingY},
+            {x: startX + _cardW + spacingX, y: startY + _cardH + spacingY}
+        ];
 
-        _pStartPosButOffline = {x: CANVAS_WIDTH/2, y: iStartY + 90};
-        _oButOffline = new CTextButton(_pStartPosButOffline.x, _pStartPosButOffline.y, oSpriteBtn, "1V1 OFFLINE", FONT_GAME, "#fff", 40, "center", s_oStage);
-        _oButOffline.addEventListener(ON_MOUSE_UP, this._onButOffline, this);
-
-        _pStartPosButOnline = {x: CANVAS_WIDTH/2, y: iStartY + 180};
-        _oButOnline = new CTextButton(_pStartPosButOnline.x, _pStartPosButOnline.y, oSpriteBtn, "1V1 ONLINE", FONT_GAME, "#fff", 40, "center", s_oStage);
-        _oButOnline.addEventListener(ON_MOUSE_UP, this._onButOnline, this);
-
-        _pStartPosButTournament = {x: CANVAS_WIDTH/2, y: iStartY + 270};
-        _oButTournament = new CTextButton(_pStartPosButTournament.x, _pStartPosButTournament.y, oSpriteBtn, "TOURNAMENTS", FONT_GAME, "#fff", 40, "center", s_oStage);
-        _oButTournament.addEventListener(ON_MOUSE_UP, this._onButTournament, this);
+        _oButPractice = this._createCardButton(_aCardStartPos[0].x, _aCardStartPos[0].y, "SOLO PRACTICE", this._onButPractice);
+        _oButOffline = this._createCardButton(_aCardStartPos[1].x, _aCardStartPos[1].y, "1V1 OFFLINE", this._onButOffline);
+        _oButOnline = this._createCardButton(_aCardStartPos[2].x, _aCardStartPos[2].y, "1V1 ONLINE", this._onButOnline);
+        _oButTournament = this._createCardButton(_aCardStartPos[3].x, _aCardStartPos[3].y, "TOURNAMENTS", this._onButTournament);
 
         // Audio toggle
         if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
@@ -104,10 +101,14 @@ function CMenu(){
 
     this.unload = function(){
         _oButCredits.unload();
-        _oButPractice.unload();
-        _oButOffline.unload();
-        _oButOnline.unload();
-        _oButTournament.unload();
+        _oButPractice.removeAllEventListeners();
+        _oButOffline.removeAllEventListeners();
+        _oButOnline.removeAllEventListeners();
+        _oButTournament.removeAllEventListeners();
+        s_oStage.removeChild(_oButPractice);
+        s_oStage.removeChild(_oButOffline);
+        s_oStage.removeChild(_oButOnline);
+        s_oStage.removeChild(_oButTournament);
 
         if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
             _oAudioToggle.unload();
@@ -131,10 +132,34 @@ function CMenu(){
             _oButFullscreen.setPosition(_pStartPosFullscreen.x + s_iOffsetX, _pStartPosFullscreen.y + s_iOffsetY);
         }
         _oButCredits.setPosition(_pStartPosCredits.x + s_iOffsetX, _pStartPosCredits.y + s_iOffsetY);
-        _oButPractice.setPosition(_pStartPosButPractice.x, _pStartPosButPractice.y - s_iOffsetY);
-        _oButOffline.setPosition(_pStartPosButOffline.x, _pStartPosButOffline.y - s_iOffsetY);
-        _oButOnline.setPosition(_pStartPosButOnline.x, _pStartPosButOnline.y - s_iOffsetY);
-        _oButTournament.setPosition(_pStartPosButTournament.x, _pStartPosButTournament.y - s_iOffsetY);
+    var aCards = [_oButPractice, _oButOffline, _oButOnline, _oButTournament];
+    for (var i = 0; i < _aCardStartPos.length; i++) {
+        aCards[i].x = _aCardStartPos[i].x + s_iOffsetX;
+        aCards[i].y = _aCardStartPos[i].y + s_iOffsetY;
+    }
+    };
+
+    this._createCardButton = function(iX, iY, szLabel, cb){
+        var oContainer = new createjs.Container();
+        oContainer.x = iX;
+        oContainer.y = iY;
+        oContainer.regX = _cardW / 2;
+        oContainer.regY = _cardH / 2;
+
+        var oBg = new createjs.Shape();
+        oBg.graphics.beginFill('#1e1e1e').drawRoundRect(-_cardW/2, -_cardH/2, _cardW, _cardH, 20);
+
+        var oText = new createjs.Text(szLabel, '40px ' + FONT_GAME, '#fff');
+        oText.textAlign = 'center';
+        oText.textBaseline = 'middle';
+
+        oContainer.addChild(oBg, oText);
+        oContainer.cursor = 'pointer';
+        oContainer.on('mousedown', function(){ oContainer.scaleX = oContainer.scaleY = 0.95; });
+        oContainer.on('pressup', function(){ oContainer.scaleX = oContainer.scaleY = 1; playSound('click',1,false); cb.call(s_oMenu); });
+
+        s_oStage.addChild(oContainer);
+        return oContainer;
     };
 
     this._onButPractice = function(){

@@ -218,7 +218,7 @@ STARTING_RACK_POS[GAME_MODE_TIME] = [
                     
 var RECT_COLLISION = new createjs.Rectangle( 124,117,1037,483);
 var MAX_SPIN_VALUE = 50;
-var K_IMPACT_BALL    = 0.97;	
+var K_IMPACT_BALL    = 0.99; // higher value for more realistic collisions
 var K_FRICTION       = 0.985;
 var K_MIN_FORCE      = 0.016;
 var MAX_POWER_SHOT = 200;
