@@ -35,8 +35,9 @@ var GAME_MODE_EIGHT = 0;
 var GAME_MODE_NINE = 1;
 var GAME_MODE_TIME = 2;
 
-var PLAYER_MODE_TWO = 0;
-var PLAYER_MODE_TOURNAMENT = 1; // Placeholder for future tournament logic
+var PLAYER_MODE_PRACTICE = 0;
+var PLAYER_MODE_TWO = 1;
+var PLAYER_MODE_TOURNAMENT = 2; // Placeholder for future tournament logic
 
 var STATE_TABLE_PLACE_CUE_BALL_BREAKSHOT  = 0;
 var STATE_TABLE_PLACE_CUE_BALL = 1;
@@ -57,35 +58,6 @@ var PREVISION_TRAJECTORY_COLORS = [
                                         ["#00f", "#f00"]
                                   ];
                                   
-var EASY   = 0;
-var MEDIUM = 1;
-var HARD   = 2;
-
-var GAME_DIFFICULTY_PARAMS = [];
-GAME_DIFFICULTY_PARAMS[EASY] = [
-                                    {max: 0.99, min: 0.9},
-                                    {max: 0.9, min: 0.85},
-                                    {max: 0.87,  min: 0.8},
-                                    {max: 0.8, min: 0.75},
-                                    {max: 0.7,  min: 0.6}
-                                ];
-                                
-GAME_DIFFICULTY_PARAMS[MEDIUM] = [
-                                    {max: 0.99, min: 0.95},
-                                    {max: 0.97, min: 0.93},
-                                    {max: 0.9,  min: 0.87},
-                                    {max: 0.85, min: 0.8},
-                                    {max: 0.83,  min: 0.8}
-                                ];
-                                
-GAME_DIFFICULTY_PARAMS[HARD] = [
-                                    {max: 0.99, min: 0.99},
-                                    {max: 0.99, min: 0.97},
-                                    {max: 0.97,  min: 0.95},
-                                    {max: 0.95, min: 0.93},
-                                    {max: 0.93,  min: 0.9}
-                                ];
-
 var TABLE_CENTER;
 var TABLE_CENTER_COORDINATE;
 var FIELD_POINTS = [
