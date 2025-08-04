@@ -20,7 +20,12 @@ function CMenu(){
 
     this._init = function(){
         // Background
-        _oBg = createBitmap(s_oSpriteLibrary.getSprite('bg_menu'));
+        var oSpriteBg = s_oSpriteLibrary.getSprite('bg_menu');
+        _oBg = createBitmap(oSpriteBg);
+        _oBg.regX = oSpriteBg.width / 2;
+        _oBg.regY = oSpriteBg.height / 2;
+        _oBg.x = CANVAS_WIDTH / 2;
+        _oBg.y = CANVAS_HEIGHT / 2;
         s_oStage.addChild(_oBg);
 
         // Card layout buttons
@@ -135,11 +140,15 @@ function CMenu(){
             _oButFullscreen.setPosition(_pStartPosFullscreen.x + s_iOffsetX, _pStartPosFullscreen.y + s_iOffsetY);
         }
         _oButCredits.setPosition(_pStartPosCredits.x + s_iOffsetX, _pStartPosCredits.y + s_iOffsetY);
-    var aCards = [_oButPractice, _oButOffline, _oButOnline, _oButTournament];
-    for (var i = 0; i < _aCardStartPos.length; i++) {
-        aCards[i].x = _aCardStartPos[i].x + s_iOffsetX;
-        aCards[i].y = _aCardStartPos[i].y + s_iOffsetY;
-    }
+
+        var aCards = [_oButPractice, _oButOffline, _oButOnline, _oButTournament];
+        for (var i = 0; i < _aCardStartPos.length; i++) {
+            aCards[i].x = _aCardStartPos[i].x + s_iOffsetX;
+            aCards[i].y = _aCardStartPos[i].y + s_iOffsetY * 0.5;
+        }
+
+        _oBg.x = CANVAS_WIDTH / 2 + s_iOffsetX;
+        _oBg.y = CANVAS_HEIGHT / 2 + s_iOffsetY;
     };
 
     this._createCardButton = function(iX, iY, szLabel, cb){
