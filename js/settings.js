@@ -35,8 +35,9 @@ var GAME_MODE_EIGHT = 0;
 var GAME_MODE_NINE = 1;
 var GAME_MODE_TIME = 2;
 
-var GAME_MODE_TWO = 0;
-var GAME_MODE_TOURNAMENT = 1; // Placeholder for future tournament logic
+var GAME_MODE_CPU = 0;
+var GAME_MODE_TWO = 1;
+var GAME_MODE_TOURNAMENT = 2; // Placeholder for future tournament logic
 
 var STATE_TABLE_PLACE_CUE_BALL_BREAKSHOT  = 0;
 var STATE_TABLE_PLACE_CUE_BALL = 1;
