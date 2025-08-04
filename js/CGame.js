@@ -30,7 +30,7 @@ function CGame(){
         _bHoldStickCommand = false;
         _iDirStickCommand = 1;
         _iDirStickSpeedCommand = COMMAND_STICK_START_SPEED;
-        _aPottedBallsBeforeAssign = [];
+        _aPottedBallsBeforeAssign = _oGameState.getPottedBallsBeforeAssign();
         
         switch(s_iGameMode) {
             case GAME_MODE_NINE: {
@@ -348,6 +348,7 @@ function CGame(){
             this.ballPotted(_aPottedBallsBeforeAssign[i]);
         }
         _aPottedBallsBeforeAssign = [];
+        _oGameState.clearPottedBallsBeforeAssign();
     };
 
     this.setBallInInterface = function(szSuites1) {
@@ -367,6 +368,7 @@ function CGame(){
     this.ballPotted = function(iBall){
         if(!_oGameState.isSuitAssigned()){
             _aPottedBallsBeforeAssign.push(iBall);
+            _oGameState.addPottedBallBeforeAssign(iBall);
             return;
         }
 

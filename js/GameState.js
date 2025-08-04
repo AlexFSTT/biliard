@@ -4,6 +4,7 @@ function GameState(){
     var _aSuitePlayer;
     var _iScore;
     var _iWinStreak;
+    var _aPottedBallsBeforeAssign;
 
     this.reset = function(){
         _iCurTurn = 1;
@@ -11,6 +12,7 @@ function GameState(){
         _aSuitePlayer = [];
         _iScore = 0;
         _iWinStreak = 0;
+        _aPottedBallsBeforeAssign = [];
     };
 
     this.changeTurn = function(){
@@ -98,13 +100,26 @@ function GameState(){
         return _bSuitAssigned;
     };
 
+    this.addPottedBallBeforeAssign = function(iBall){
+        _aPottedBallsBeforeAssign.push(iBall);
+    };
+
+    this.getPottedBallsBeforeAssign = function(){
+        return _aPottedBallsBeforeAssign.slice();
+    };
+
+    this.clearPottedBallsBeforeAssign = function(){
+        _aPottedBallsBeforeAssign = [];
+    };
+
     this.toJSON = function(){
         return {
             curTurn: _iCurTurn,
             suitAssigned: _bSuitAssigned,
             suites: _aSuitePlayer,
             score: _iScore,
-            winStreak: _iWinStreak
+            winStreak: _iWinStreak,
+            pottedBallsBeforeAssign: _aPottedBallsBeforeAssign
         };
     };
 
