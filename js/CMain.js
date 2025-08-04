@@ -365,6 +365,6 @@ var s_bStorageAvailable = true;
 var s_bInteractiveHelp = true;
 var s_aSoundsInfo;
 var s_iGameMode = GAME_MODE_EIGHT;
-var s_iPlayerMode = PLAYER_MODE_TWO;
+var s_iPlayerMode = PLAYER_MODE_TWO; // default to two-player mode
 var s_iCurLang = LANG_EN;
 var s_iGameDifficulty = EASY;
