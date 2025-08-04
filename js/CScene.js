@@ -55,7 +55,9 @@ function CScene(){
     };
     
     this.consoleInfoRenderer = function(){
-        console.log(_oRenderer.info);
+        if (s_bDebug) {
+            console.log(_oRenderer.info);
+        }
     };
     
     this.update = function(){

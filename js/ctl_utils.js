@@ -3,6 +3,7 @@ var s_bIsIphone = false;
 var s_iOffsetX;
 var s_iOffsetY;
 var s_bFocus = true;
+var s_bDebug = false;
 
 /**
  * jQuery.browser.mobile (http://detectmobilebrowser.com/)
@@ -15,7 +16,9 @@ $(window).resize(function() {
 });
 
 function trace(szMsg){
-    console.log(szMsg);
+    if(s_bDebug){
+        console.log(szMsg);
+    }
 }
 
 function isIOS() {
