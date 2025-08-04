@@ -355,44 +355,44 @@ function CGame(){
         _aSuitePlayer = new Array();
         if (iBallNumber < 8) {
                 if (_iCurTurn === 1) {
-                        _aSuitePlayer[0] = "solid";
-                        _aSuitePlayer[1] = "stripes";
-                        this.setBallInInterface("solid");
+                        _aSuitePlayer[0] = SUIT_SOLID;
+                        _aSuitePlayer[1] = SUIT_STRIPES;
+                        this.setBallInInterface(SUIT_SOLID);
                 }else {
-                        _aSuitePlayer[0] = "stripes";
-                        _aSuitePlayer[1] = "solid";
-                        this.setBallInInterface("stripes",);
+                        _aSuitePlayer[0] = SUIT_STRIPES;
+                        _aSuitePlayer[1] = SUIT_SOLID;
+                        this.setBallInInterface(SUIT_STRIPES);
                 }
         }else {
                 if (_iCurTurn === 1) {
-                        _aSuitePlayer[0] = "stripes";
-                        _aSuitePlayer[1] = "solid";
-                        this.setBallInInterface("stripes");
+                        _aSuitePlayer[0] = SUIT_STRIPES;
+                        _aSuitePlayer[1] = SUIT_SOLID;
+                        this.setBallInInterface(SUIT_STRIPES);
                 }else {
-                        _aSuitePlayer[0] = "solid";
-                        _aSuitePlayer[1] = "stripes";
-                        this.setBallInInterface("solid");
+                        _aSuitePlayer[0] = SUIT_SOLID;
+                        _aSuitePlayer[1] = SUIT_STRIPES;
+                        this.setBallInInterface(SUIT_SOLID);
                 }
         }
         _bSuitAssigned = true;
     };
     
     this.setBallInInterface = function(szSuites1) {
-            if (szSuites1 == "solid") {
+            if (szSuites1 === SUIT_SOLID) {
                     _oPlayer1.setBall(2);
                     _oPlayer2.setBall(15);
             }else {
                     _oPlayer1.setBall(15);
-                    _oPlayer2.setBall(2);    
+                    _oPlayer2.setBall(2);
             }
     };
-    
+
     this.isLegalShotFor8Ball = function(iBall,iNumBallToPot) {
-    if (_bSuitAssigned) {			
-            if ( (_aSuitePlayer[_iCurTurn-1] == "solid") && (iBall<8) ) {
+    if (_bSuitAssigned) {
+            if ( (_aSuitePlayer[_iCurTurn-1] === SUIT_SOLID) && (iBall<8) ) {
                     return true;
             }else {
-                    if ( (_aSuitePlayer[_iCurTurn-1] == "stripes") && (iBall > 8) ) {
+                    if ( (_aSuitePlayer[_iCurTurn-1] === SUIT_STRIPES) && (iBall > 8) ) {
                             return true;
                     }else if( (iBall == 8) && (iNumBallToPot==0) ){
                                     return true;

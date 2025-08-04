@@ -1776,7 +1776,7 @@ function CTable(oParentContainer, oCpuDifficultyParams){
                                     var iEnd = BALL_NUMBER + 1;
                                     var aBalls = new Array();
                                     if (s_oGame.isSuiteAssigned()) {
-                                            if (s_oGame.getSuiteForCurPlayer() == "solid") {
+                                            if (s_oGame.getSuiteForCurPlayer() === SUIT_SOLID) {
                                                     iStart = 1;
                                                     iEnd = 9;
                                             }else {
