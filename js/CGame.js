@@ -61,7 +61,7 @@ function CGame(){
         _oInterface = new CInterface(_oContainerInterface);
         _oScenario = new CScene();
 
-        _oTable = new CTable(_oContainerTable, GAME_DIFFICULTY_PARAMS[s_iGameDifficulty]);
+        _oTable = new CTable(_oContainerTable);
         _oTable.addEventListener(ON_LOST,this.gameOver,this);
         _oTable.addEventListener(ON_WON,this.showWinPanel,this);
         

@@ -7,7 +7,6 @@ function CMain(oData){
     
     var _oPreloader;
     var _oMenu;
-    var _oDifficultyMenu;
     var _oGame;
 
     this.initContainer = function(){
@@ -233,14 +232,9 @@ function CMain(oData){
         _iState = STATE_MENU;
     };
     
-    this.gotoDifficultyMenu = function(){
-        _oDifficultyMenu = new CDifficutlyMenu();
-        _iState = STATE_MENU;
-    };
-
     this.gotoGame = function(){
-        _oGame = new CGame();   
-							
+        _oGame = new CGame();
+
         _iState = STATE_GAME;
     };
     
@@ -367,4 +361,3 @@ var s_aSoundsInfo;
 var s_iGameMode = GAME_MODE_EIGHT;
 var s_iPlayerMode = PLAYER_MODE_TWO;
 var s_iCurLang = LANG_EN;
-var s_iGameDifficulty = EASY;
