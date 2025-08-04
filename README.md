@@ -153,7 +153,7 @@ const GAME_CONFIG = Object.freeze({
 ```javascript
 Menu Options:
 ├── 🏆 JOIN TOURNAMENT    → Browse active tournaments
-├── ⚡ CREATE TOURNAMENT  → Custom tournament creation
+├── ⚡ Multiplayer        → Custom 1 vs 1
 ├── 🎯 PRACTICE MODE      → Offline skill practice
 └── 🏅 LEADERBOARD       → Global rankings
 ```
@@ -658,11 +658,11 @@ Performance Targets:
 ## 📄 Document Information
 
 **Document Version:** 1.0  
-**Last Updated:** December 2024  
-**Created By:** Claude AI Assistant  
+**Last Updated:** July 2025  
+**Created By:** Fistis Alexandru 
 **Project:** 8 Ball Pool Tournament Edition  
 **Status:** Development Planning Phase  
 
 ---
 
-**🎱 Ready to transform your pool game into a competitive tournament platform! 🏆**
+**🎱 Ready to transform this pool game into a competitive tournament platform! 🏆**
