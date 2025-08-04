@@ -26,8 +26,10 @@ function CMenu(){
         // Card layout buttons
         var spacingX = 50;
         var spacingY = 40;
-        var startX = CANVAS_WIDTH / 2 - _cardW - spacingX / 2;
-        var startY = CANVAS_HEIGHT / 2 - _cardH - spacingY / 2;
+        var totalWidth = _cardW * 2 + spacingX;
+        var totalHeight = _cardH * 2 + spacingY;
+        var startX = (CANVAS_WIDTH - totalWidth) / 2;
+        var startY = CANVAS_HEIGHT - totalHeight - 100;
 
         _aCardStartPos = [
             {x: startX, y: startY},
