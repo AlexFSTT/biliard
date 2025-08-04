@@ -16,11 +16,11 @@ body{
 }
 
 body.menu{
-    background-image: url('../sprites/bg_menu.jpg');
+    background-image: none;
 }
 
 body.game{
-    background-image: url('../sprites/bg_game.jpg');
+    background-image: none;
 }
 
 *, *:before, *:after {
