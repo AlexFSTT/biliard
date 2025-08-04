@@ -179,9 +179,6 @@ function sizeHandler() {
     if(s_oMenu !== null){
         s_oMenu.refreshButtonPos( );
     }
-    if(s_oDifficultyMenu !== null){
-        s_oDifficultyMenu.refreshButtonPos( );
-    }
 
     $("#canvas_game").css("width",destW+"px");
     $("#canvas_game").css("height",destH+"px");
@@ -514,9 +511,6 @@ function fullscreenHandler(){
     if (s_oMenu !== null){
         s_oMenu.resetFullscreenBut();
     }
-    if(s_oDifficultyMenu !== null){
-        s_oDifficultyMenu.resetFullscreenBut();
-    }
 }
 
 if (screenfull.isEnabled) {
@@ -528,8 +522,6 @@ if (screenfull.isEnabled) {
         if (s_oMenu !== null){
             s_oMenu.resetFullscreenBut();
         }
-        if(s_oDifficultyMenu !== null){
-            s_oDifficultyMenu.resetFullscreenBut();
-        }
+        
     });
 }

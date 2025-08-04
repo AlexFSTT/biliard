@@ -7,7 +7,6 @@ function CMain(oData){
     
     var _oPreloader;
     var _oMenu;
-    var _oDifficultyMenu;
     var _oGame;
 
     this.initContainer = function(){
@@ -152,9 +151,7 @@ function CMain(oData){
         s_oSpriteLibrary.addSprite('but_yes', './sprites/but_yes.png');
         s_oSpriteLibrary.addSprite('but_no', './sprites/but_no.png');
         
-        s_oSpriteLibrary.addSprite("vs_man_panel","./sprites/vs_man_panel.png");
-
-         s_oSpriteLibrary.addSprite("but_text","./sprites/but_text.png");
+        s_oSpriteLibrary.addSprite("but_text","./sprites/but_text.png");
         
         s_oSpriteLibrary.addSprite("ball_shadow", "./sprites/ball_shadow.png");
         s_oSpriteLibrary.addSprite("but_arrow_left",  "./sprites/but_arrow_left.png");
@@ -233,11 +230,6 @@ function CMain(oData){
         _iState = STATE_MENU;
     };
     
-    this.gotoDifficultyMenu = function(){
-        _oDifficultyMenu = new CDifficutlyMenu();
-        _iState = STATE_MENU;
-    };
-
     this.gotoGame = function(){
         _oGame = new CGame();   
 							
@@ -365,6 +357,5 @@ var s_bStorageAvailable = true;
 var s_bInteractiveHelp = true;
 var s_aSoundsInfo;
 var s_iGameMode = GAME_MODE_EIGHT;
-var s_iPlayerMode = PLAYER_MODE_TWO; // default to two-player mode
+var s_iPlayerMode = PLAYER_MODE_PRACTICE; // default to practice mode
 var s_iCurLang = LANG_EN;
-var s_iGameDifficulty = EASY;

@@ -2,12 +2,16 @@ function CMenu(){
     var _pStartPosAudio;
     var _pStartPosCredits;
     var _pStartPosFullscreen;
-    var _pStartPosButTwo;
+    var _pStartPosButPractice;
+    var _pStartPosButOffline;
+    var _pStartPosButOnline;
     var _pStartPosButTournament;
 
     var _oBg;
-    var _oButPlayTwo;
-    var _oButPlayTournament;
+    var _oButPractice;
+    var _oButOffline;
+    var _oButOnline;
+    var _oButTournament;
     var _oAudioToggle;
     var _oButCredits;
     var _oFade;
@@ -20,17 +24,25 @@ function CMenu(){
         _oBg = createBitmap(s_oSpriteLibrary.getSprite('bg_menu'));
         s_oStage.addChild(_oBg);
 
-        // Play buttons
-        var iButtonSpacing = 40;
-        var oSpriteTwo = s_oSpriteLibrary.getSprite('vs_man_panel');
-        _pStartPosButTwo = {x: CANVAS_WIDTH/2 - (oSpriteTwo.width/2) - iButtonSpacing/2, y: CANVAS_HEIGHT - 220};
-        _oButPlayTwo = new CGfxButton(_pStartPosButTwo.x, _pStartPosButTwo.y, oSpriteTwo, s_oStage);
-        _oButPlayTwo.addEventListener(ON_MOUSE_UP, this._onButPlayTwo, this);
+        // Mode buttons
+        var oSpriteBtn = s_oSpriteLibrary.getSprite('but_text');
+        var iStartY = CANVAS_HEIGHT/2 - 150;
 
-        var oSpriteTournament = s_oSpriteLibrary.getSprite('vs_pc_panel');
-        _pStartPosButTournament = {x: CANVAS_WIDTH/2 + (oSpriteTournament.width/2) + iButtonSpacing/2, y: CANVAS_HEIGHT - 220};
-        _oButPlayTournament = new CGfxButton(_pStartPosButTournament.x, _pStartPosButTournament.y, oSpriteTournament, s_oStage);
-        _oButPlayTournament.addEventListener(ON_MOUSE_UP, this._onButPlayTournament, this);
+        _pStartPosButPractice = {x: CANVAS_WIDTH/2, y: iStartY};
+        _oButPractice = new CTextButton(_pStartPosButPractice.x, _pStartPosButPractice.y, oSpriteBtn, "SOLO PRACTICE", FONT_GAME, "#fff", 40, "center", s_oStage);
+        _oButPractice.addEventListener(ON_MOUSE_UP, this._onButPractice, this);
+
+        _pStartPosButOffline = {x: CANVAS_WIDTH/2, y: iStartY + 90};
+        _oButOffline = new CTextButton(_pStartPosButOffline.x, _pStartPosButOffline.y, oSpriteBtn, "1V1 OFFLINE", FONT_GAME, "#fff", 40, "center", s_oStage);
+        _oButOffline.addEventListener(ON_MOUSE_UP, this._onButOffline, this);
+
+        _pStartPosButOnline = {x: CANVAS_WIDTH/2, y: iStartY + 180};
+        _oButOnline = new CTextButton(_pStartPosButOnline.x, _pStartPosButOnline.y, oSpriteBtn, "1V1 ONLINE", FONT_GAME, "#fff", 40, "center", s_oStage);
+        _oButOnline.addEventListener(ON_MOUSE_UP, this._onButOnline, this);
+
+        _pStartPosButTournament = {x: CANVAS_WIDTH/2, y: iStartY + 270};
+        _oButTournament = new CTextButton(_pStartPosButTournament.x, _pStartPosButTournament.y, oSpriteBtn, "TOURNAMENTS", FONT_GAME, "#fff", 40, "center", s_oStage);
+        _oButTournament.addEventListener(ON_MOUSE_UP, this._onButTournament, this);
 
         // Audio toggle
         if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
@@ -92,8 +104,10 @@ function CMenu(){
 
     this.unload = function(){
         _oButCredits.unload();
-        _oButPlayTwo.unload();
-        _oButPlayTournament.unload();
+        _oButPractice.unload();
+        _oButOffline.unload();
+        _oButOnline.unload();
+        _oButTournament.unload();
 
         if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
             _oAudioToggle.unload();
@@ -117,11 +131,23 @@ function CMenu(){
             _oButFullscreen.setPosition(_pStartPosFullscreen.x + s_iOffsetX, _pStartPosFullscreen.y + s_iOffsetY);
         }
         _oButCredits.setPosition(_pStartPosCredits.x + s_iOffsetX, _pStartPosCredits.y + s_iOffsetY);
-        _oButPlayTwo.setPosition(_pStartPosButTwo.x, _pStartPosButTwo.y - s_iOffsetY);
-        _oButPlayTournament.setPosition(_pStartPosButTournament.x, _pStartPosButTournament.y - s_iOffsetY);
+        _oButPractice.setPosition(_pStartPosButPractice.x, _pStartPosButPractice.y - s_iOffsetY);
+        _oButOffline.setPosition(_pStartPosButOffline.x, _pStartPosButOffline.y - s_iOffsetY);
+        _oButOnline.setPosition(_pStartPosButOnline.x, _pStartPosButOnline.y - s_iOffsetY);
+        _oButTournament.setPosition(_pStartPosButTournament.x, _pStartPosButTournament.y - s_iOffsetY);
     };
 
-    this._onButPlayTwo = function(){
+    this._onButPractice = function(){
+        s_iPlayerMode = PLAYER_MODE_PRACTICE;
+        s_iGameMode = GAME_MODE_EIGHT;
+        this._onExit(function(){
+            s_oMenu.unload();
+            s_oMain.gotoGame();
+            $(s_oMain).trigger("start_session");
+        });
+    };
+
+    this._onButOffline = function(){
         s_iPlayerMode = PLAYER_MODE_TWO;
         s_iGameMode = GAME_MODE_EIGHT;
         this._onExit(function(){
@@ -131,13 +157,16 @@ function CMenu(){
         });
     };
 
-    this._onButCreditsRelease = function(){
-        new CCreditsPanel();
+    this._onButOnline = function(){
+        alert("Online mode coming soon!");
     };
 
-    this._onButPlayTournament = function(){
-        s_iPlayerMode = PLAYER_MODE_TOURNAMENT;
-        console.log("Tournament mode is not implemented yet");
+    this._onButTournament = function(){
+        alert("Tournament mode coming soon!");
+    };
+
+    this._onButCreditsRelease = function(){
+        new CCreditsPanel();
     };
 
     this._onAudioToggle = function(bActive){
