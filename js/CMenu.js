@@ -2,11 +2,10 @@ function CMenu(){
     var _pStartPosAudio;
     var _pStartPosCredits;
     var _pStartPosFullscreen;
-    var _pStartPosButSingle;
     var _pStartPosButTwo;
+    var _pStartPosButTournament;
 
     var _oBg;
-    var _oButPlaySingle;
     var _oButPlayTwo;
     var _oAudioToggle;
     var _oButCredits;
@@ -21,11 +20,7 @@ function CMenu(){
         s_oStage.addChild(_oBg);
 
         // Play buttons (moved higher by reducing y value)
-        _pStartPosButSingle = {x: CANVAS_WIDTH/2 - 250, y: CANVAS_HEIGHT - 220};
-        _oButPlaySingle = new CGfxButton(_pStartPosButSingle.x, _pStartPosButSingle.y, s_oSpriteLibrary.getSprite('vs_pc_panel'), s_oStage);
-        _oButPlaySingle.addEventListener(ON_MOUSE_UP, this._onButPlaySingle, this);
-
-        _pStartPosButTwo = {x: CANVAS_WIDTH/2 + 250, y: CANVAS_HEIGHT - 220};
+        _pStartPosButTwo = {x: CANVAS_WIDTH/2 - 250, y: CANVAS_HEIGHT - 220};
         _oButPlayTwo = new CGfxButton(_pStartPosButTwo.x, _pStartPosButTwo.y, s_oSpriteLibrary.getSprite('vs_man_panel'), s_oStage);
         _oButPlayTwo.addEventListener(ON_MOUSE_UP, this._onButPlayTwo, this);
 
@@ -88,7 +83,6 @@ function CMenu(){
     };
 
     this.unload = function(){
-        _oButPlaySingle.unload();
         _oButCredits.unload();
         _oButPlayTwo.unload();
 
@@ -114,17 +108,7 @@ function CMenu(){
             _oButFullscreen.setPosition(_pStartPosFullscreen.x + s_iOffsetX, _pStartPosFullscreen.y + s_iOffsetY);
         }
         _oButCredits.setPosition(_pStartPosCredits.x + s_iOffsetX, _pStartPosCredits.y + s_iOffsetY);
-        _oButPlaySingle.setPosition(_pStartPosButSingle.x, _pStartPosButSingle.y - s_iOffsetY);
         _oButPlayTwo.setPosition(_pStartPosButTwo.x, _pStartPosButTwo.y - s_iOffsetY);
-    };
-
-    this._onButPlaySingle = function(){
-        s_iPlayerMode = GAME_MODE_CPU;
-        s_iGameMode = GAME_MODE_EIGHT;
-        this._onExit(function(){
-            s_oMenu.unload();
-            s_oMain.gotoDifficultyMenu();
-        });
     };
 
     this._onButPlayTwo = function(){

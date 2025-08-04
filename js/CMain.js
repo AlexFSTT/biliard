@@ -153,8 +153,7 @@ function CMain(oData){
         s_oSpriteLibrary.addSprite('but_no', './sprites/but_no.png');
         
         s_oSpriteLibrary.addSprite("vs_man_panel","./sprites/vs_man_panel.png");
-        s_oSpriteLibrary.addSprite("vs_pc_panel","./sprites/vs_pc_panel.png");
-        
+
          s_oSpriteLibrary.addSprite("but_text","./sprites/but_text.png");
         
         s_oSpriteLibrary.addSprite("ball_shadow", "./sprites/ball_shadow.png");
@@ -366,6 +365,6 @@ var s_bStorageAvailable = true;
 var s_bInteractiveHelp = true;
 var s_aSoundsInfo;
 var s_iGameMode = GAME_MODE_EIGHT;
-var s_iPlayerMode = GAME_MODE_CPU;
+var s_iPlayerMode = GAME_MODE_TWO;
 var s_iCurLang = LANG_EN;
 var s_iGameDifficulty = EASY;

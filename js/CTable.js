@@ -552,9 +552,8 @@ function CTable(oParentContainer){
     };
     
     this._onPressHitArea = function(e){
-        if(!_oCueBall.isBallOnTable() 
-                || (s_iPlayerMode === GAME_MODE_CPU) && (s_oGame.getCurTurn() === 2)
-                || !_oPhysicsController.areBallsStopped() 
+        if(!_oCueBall.isBallOnTable()
+                || !_oPhysicsController.areBallsStopped()
                 || _bReadyForShot){
             return;
         }
@@ -644,8 +643,7 @@ function CTable(oParentContainer){
     };
     
     this._onPressDownCueBall = function(oEvent){
-        if((s_iPlayerMode === GAME_MODE_CPU) && (s_oGame.getCurTurn() === 2)
-            ||(_iState !== STATE_TABLE_PLACE_CUE_BALL_BREAKSHOT && _iState !== STATE_TABLE_PLACE_CUE_BALL)){
+        if(_iState !== STATE_TABLE_PLACE_CUE_BALL_BREAKSHOT && _iState !== STATE_TABLE_PLACE_CUE_BALL){
             return;
         }
         
@@ -726,7 +724,7 @@ function CTable(oParentContainer){
     };
     
     //verify if ball in second parameter collides with any ball using directional volume
-    this._checkCpuBallCollision = function(vCollPoint,oBallPos,iNumberBall1,iNumberBall2,aDataColl) {
+    this._checkBallCollision = function(vCollPoint,oBallPos,iNumberBall1,iNumberBall2,aDataColl) {
             var vBallCCWDir = new CVector2();
             var vBallCWDir = new CVector2();
             var vBallDir = new CVector2();
@@ -928,7 +926,7 @@ function CTable(oParentContainer){
                         vCollPoint.normalize();
                         //find any collision  between cue ball and other balls
                         
-                        var bCheckBallCollison = this._checkCpuBallCollision(vMousePos, _oCueBall.getPos(), 0, 0, aCollisionData);
+                        var bCheckBallCollison = this._checkBallCollision(vMousePos, _oCueBall.getPos(), 0, 0, aCollisionData);
                         
                         for(var i = 0; i < aCollisionData.length; i++){
                             if(!aCollisionData[i].ball.isBallOnTable()){
@@ -1139,8 +1137,7 @@ function CTable(oParentContainer){
     
     this.rotateStick = function(fAngleOffset){
         if(
-            (_iState === STATE_TABLE_SHOOT || _iState === STATE_TABLE_SHOOTING) 
-            || (s_iPlayerMode === GAME_MODE_CPU) && (s_oGame.getCurTurn() === 2)
+            (_iState === STATE_TABLE_SHOOT || _iState === STATE_TABLE_SHOOTING)
             || _bReadyForShot){
             return;
         }
@@ -1188,44 +1185,25 @@ function CTable(oParentContainer){
                                             }
                                     }else if (_aBallsInHoleInCurShot.length > 0) {
                                             for (var i = 0; i < _aBallsInHoleInCurShot.length; i++) {
-                                                    if (_aBallsInHoleInCurShot[i] == 9) {	
+                                                    if (_aBallsInHoleInCurShot[i] == 9) {
                                                             _bForceStopStick = true;
                                                             _aBalls[9].setVisible(true);
-                                                            if ( s_iPlayerMode == GAME_MODE_CPU) {
-                                                                    if (s_oGame.getCurTurn() == 2) {
-                                                                            if(_aCbCompleted[ON_END_GAME]){
-                                                                                _aCbCompleted[ON_LOST].call(_aCbOwner[ON_LOST]);
-                                                                            }
-                                                                            s_oGame.resetWinStreak();
-                                                                    }else {
-                                                                            if(_aCbCompleted[ON_WON]){
-                                                                                _aCbCompleted[ON_WON].call(_aCbOwner[ON_WON],"YOU");
-                                                                            }						
-                                                                            s_oGame.increaseWinStreak();
+                                                            if (s_oGame.getCurTurn() == 1) {
+                                                                    if(_aCbCompleted[ON_WON]){
+                                                                        _aCbCompleted[ON_WON].call(_aCbOwner[ON_WON],s_oGame.getPlayer1Name());
                                                                     }
-
                                                             }else {
-                                                                    if (s_oGame.getCurTurn() == 1) {
-                                                                  
-                                                                            if(_aCbCompleted[ON_WON]){
-                                                                                _aCbCompleted[ON_WON].call(_aCbOwner[ON_WON],s_oGame.getPlayer1Name());
-                                                                            }
-                                                                    }else {
-                                                                            if(_aCbCompleted[ON_WON]){
-                                                                                _aCbCompleted[ON_WON].call(_aCbOwner[ON_WON],s_oGame.getPlayer2Name());
-                                                                            }
+                                                                    if(_aCbCompleted[ON_WON]){
+                                                                        _aCbCompleted[ON_WON].call(_aCbOwner[ON_WON],s_oGame.getPlayer2Name());
                                                                     }
                                                             }
-
                                                             return;
                                                     }
                                             }
-                                            //m_bTargetting = true;
                                             _oStick.setVisible(true);
                                     }else {
                                             s_oGame.changeTurn();
-                                            //m_bTargetting = true;
-                                            _oStick.setVisible(true);		
+                                            _oStick.setVisible(true);
                                     }
                                     _bFirstShot = false;
                             }else {		
@@ -1272,82 +1250,40 @@ function CTable(oParentContainer){
                             if( _aBalls[8].isBallOnTable() === false){
                                     if (_aBallsToPotPlayers[s_oGame.getCurTurn()-1] === 0) {
                                             bEndGame = true;
-                                            if ( s_iPlayerMode == GAME_MODE_CPU) {
-                                                    if (s_oGame.getCurTurn() == 2) {
-                                                            if(_aCbCompleted[ON_LOST]){
-                                                                _aCbCompleted[ON_LOST].call(
-                                                                                                _aCbOwner[ON_LOST],
-                                                                                                TEXT_GAME_OVER,
-                                                                                                _iShotPoints
-                                                                                            );
-                                                            }
-                                                            s_oGame.resetWinStreak();
-                                                    }else {
-                                                            if(_aCbCompleted[ON_WON]){
-                                                                _aCbCompleted[ON_WON].call(
-                                                                                            _aCbOwner[ON_WON],
-                                                                                            TEXT_YOU_WON,
-                                                                                            _iShotPoints
-                                                                                           );
-                                                            }
-                                                       							
-                                                            s_oGame.increaseWinStreak();
-                                                    }
+                                            if (s_oGame.getCurTurn() === 1) {
+                                                if(_aCbCompleted[ON_WON]){
+                                                    _aCbCompleted[ON_WON].call(
+                                                                                _aCbOwner[ON_WON],
+                                                                                sprintf(TEXT_PLAYER_NAME_WON,  s_oGame.getPlayer1Name()),
+                                                                                _iShotPoints
+                                                                               );
+                                                }
                                             }else {
-                                                
-                                                    if (s_oGame.getCurTurn() === 1) {
-                                                        if(_aCbCompleted[ON_WON]){
-                                                            _aCbCompleted[ON_WON].call(
-                                                                                        _aCbOwner[ON_WON],
-                                                                                        sprintf(TEXT_PLAYER_NAME_WON,  s_oGame.getPlayer1Name()),
-                                                                                        _iShotPoints
-                                                                                       );
-                                                        }
-                                                    }else {
-                                                        if(_aCbCompleted[ON_WON]){
-                                                            _aCbCompleted[ON_WON].call(
-                                                                                        _aCbOwner[ON_WON],
-                                                                                        sprintf(TEXT_PLAYER_NAME_WON,  s_oGame.getPlayer2Name()),
-                                                                                        _iShotPoints
-                                                                                       );
-                                                        }
-                                                    }
+                                                if(_aCbCompleted[ON_WON]){
+                                                    _aCbCompleted[ON_WON].call(
+                                                                                _aCbOwner[ON_WON],
+                                                                                sprintf(TEXT_PLAYER_NAME_WON,  s_oGame.getPlayer2Name()),
+                                                                                _iShotPoints
+                                                                               );
+                                                }
                                             }
                                     }else {
-                                            if ( s_iPlayerMode == GAME_MODE_CPU) {
-                                                    if (s_oGame.getCurTurn() == 2) {	
-                                                        if(_aCbCompleted[ON_WON]){
-                                                            _aCbCompleted[ON_WON].call(_aCbOwner[ON_WON], TEXT_YOU_WON, _iShotPoints);
-                                                        }						
-                                                        s_oGame.increaseWinStreak();
-                                                    }else {
-                                                        if(_aCbCompleted[ON_LOST]){
-                                                            _aCbCompleted[ON_LOST].call(
-                                                                                            _aCbOwner[ON_LOST],
-                                                                                            TEXT_GAME_OVER,
-                                                                                            _iShotPoints
-                                                                                        );
-                                                        }
-                                                        s_oGame.resetWinStreak();
-                                                    }
+                                            if (s_oGame.getCurTurn() == 1) {
+                                                if(_aCbCompleted[ON_WON]){
+                                                    _aCbCompleted[ON_WON].call(
+                                                                                _aCbOwner[ON_WON],
+                                                                                sprintf(TEXT_PLAYER_NAME_WON,  s_oGame.getPlayer2Name()),
+                                                                                _iShotPoints
+                                                                               );
+                                                }
                                             }else {
-                                                    if (s_oGame.getCurTurn() == 1) {
-                                                        if(_aCbCompleted[ON_WON]){
-                                                            _aCbCompleted[ON_WON].call(
-                                                                                            _aCbOwner[ON_WON],
-                                                                                            sprintf(TEXT_PLAYER_NAME_WON,  s_oGame.getPlayer2Name()),
-                                                                                            _iShotPoints
-                                                                                       );
-                                                        }
-                                                    }else {
-                                                        if(_aCbCompleted[ON_WON]){
-                                                            _aCbCompleted[ON_WON].call(
-                                                                                            _aCbOwner[ON_WON],
-                                                                                            sprintf(TEXT_PLAYER_NAME_WON,  s_oGame.getPlayer1Name()),
-                                                                                            _iShotPoints
-                                                                                       );
-                                                        }
-                                                    }
+                                                if(_aCbCompleted[ON_WON]){
+                                                    _aCbCompleted[ON_WON].call(
+                                                                                _aCbOwner[ON_WON],
+                                                                                sprintf(TEXT_PLAYER_NAME_WON,  s_oGame.getPlayer1Name()),
+                                                                                _iShotPoints
+                                                                               );
+                                                }
                                             }
                                     }
                                     return;
@@ -1381,7 +1317,7 @@ function CTable(oParentContainer){
                                                                 s_oGame.setNextBallToHit(8);
                                                             }
                                                             //m_bTargetting = true;
-                                                            _oStick.setVisible(!(s_iPlayerMode === GAME_MODE_CPU && s_oGame.getCurTurn() === 2));
+                                                            _oStick.setVisible(true);
                                                     }else{
                                                             //if a player pot first an opponent ball it's foul 
                                                             if (s_oGame.getGameState().isLegalShotFor8Ball(_aBallsInHoleInCurShot[0])) {
@@ -1413,7 +1349,7 @@ function CTable(oParentContainer){
                                                                             s_oGame.setNextBallToHit(8);
                                                                     }
                                                                     //m_bTargetting = true;
-                                                                    _oStick.setVisible(!(s_iPlayerMode === GAME_MODE_CPU && s_oGame.getCurTurn() === 2));
+                                                                    _oStick.setVisible(true);
                                                             }else {
                                                                 s_oGame.changeTurn(true);
                                                                 bTurnChanged = true;
@@ -1436,7 +1372,7 @@ function CTable(oParentContainer){
                                                     s_oGame.changeTurn(false);
                                                     bTurnChanged = true;
                                                     //m_bTargetting = true;                                                       	
-                                                    _oStick.setVisible(!(s_iPlayerMode === GAME_MODE_CPU && s_oGame.getCurTurn() === 2));
+                                                    _oStick.setVisible(true);
                                             }
                                     }else {
                                             for (var i = 0; i < _aBallsInHoleInCurShot.length; i++) {
@@ -1462,42 +1398,21 @@ function CTable(oParentContainer){
                     }
             }
             
-            if(!_oCueBall.isDragging()){/*
-                if (( s_iPlayerMode == GAME_MODE_CPU) && (s_oGame.getCurTurn() === 1)){
-                    _iState = STATE_TABLE_MOVE_STICK;
-                }else{
-                    _iState = STATE_TABLE_SHOOT;
-                }*/
-              
-                if(s_iPlayerMode === GAME_MODE_CPU){
-                        if(s_oGame.getCurTurn() === 1){
-                            _iPrevState = _iState = s_bMobile ? STATE_TABLE_MOVE_STICK : STATE_TABLE_MOVE_STICK;
-                             s_oGame.showShotBar();
-                        }else{
-                            _iState = STATE_TABLE_SHOOT;
-                            
-                        }
-                }else{
-                  _iPrevState = _iState = s_bMobile ? STATE_TABLE_MOVE_STICK : STATE_TABLE_MOVE_STICK;
-                   s_oGame.showShotBar();
-                }
+            if(!_oCueBall.isDragging()){
+                _iPrevState = _iState = s_bMobile ? STATE_TABLE_MOVE_STICK : STATE_TABLE_MOVE_STICK;
+                s_oGame.showShotBar();
             }
-            if(!(s_iPlayerMode === GAME_MODE_CPU && s_oGame.getCurTurn() === 2)){
-                this.updateStick();
-                this.renderStickDirection();
-            }
-            
+            this.updateStick();
+            this.renderStickDirection();
+
             if(bTurnChanged){
                 _iComboShots = 1;
             }
-            
-            var iPreTurn = bTurnChanged ? 2 : 1;
-             if(s_iPlayerMode === GAME_MODE_CPU && s_oGame.getCurTurn() === iPreTurn){
-                if(bFault){
-                    _iShotPoints = POINTS_FOR_FAULT;
-                }
-                s_oGame.updateScore(_iShotPoints);
-             }
+
+            if(bFault){
+                _iShotPoints = POINTS_FOR_FAULT;
+            }
+            s_oGame.updateScore(_iShotPoints);
              
             _iShotPoints = 0;
             return bEndGame;
