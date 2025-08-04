@@ -6,7 +6,6 @@ function CGame(){
     var _oGameOverPanel;
     var _oPlayer1;
     var _oPlayer2;
-    var _oScoreGUI;
     var _oInterface;
     var _oTable;
     var _oContainerGame;
@@ -68,13 +67,8 @@ function CGame(){
         
         var iY = 40;
         
-        _oScoreGUI = null;
-        
         _oPlayer1  = new CPlayerGUI(CANVAS_WIDTH/2 - 400, iY,TEXT_PLAYER1,s_oStage);
         _oPlayer2  = new CPlayerGUI(CANVAS_WIDTH/2 + 400, iY,TEXT_PLAYER2,s_oStage);
-        if(s_iPlayerMode === GAME_MODE_CPU){
-            _oScoreGUI = new CScoreGUI(CANVAS_WIDTH/2, iY, s_oStage);
-        }
         
         if (_oGameState.getCurTurn() === 1) {
                 _oPlayer1.highlight();
@@ -300,9 +294,6 @@ function CGame(){
         if(_oInteractiveHelp){
             _oInteractiveHelp.refreshButtonsPos();
         }
-        if(_oScoreGUI){
-            _oScoreGUI.refreshButtonPos();
-        }
     };
     
     //set the lowest ball currently on the table in the player interface
@@ -327,10 +318,7 @@ function CGame(){
             }else {
                     _oPlayer2.highlight();
                     _oPlayer1.unlight();
-
-                    if(!s_oTable.isCpuTurn()){
-                        s_oGame.showShotBar();
-                    }
+                    s_oGame.showShotBar();
             }
             s_oInterface.resetSpin();
 
@@ -377,9 +365,7 @@ function CGame(){
     };
     
     this.showWinPanel = function(szText){
-        var iScore = s_iGameMode === GAME_MODE_CPU ? _oGameState.getScore() : undefined;
-        
-        _oGameOverPanel.show(szText, iScore);
+        _oGameOverPanel.show(szText);
         $("#canvas_upper_3d").css("pointer-events", "initial");
         _bUpdate = false;
     };
@@ -399,19 +385,6 @@ function CGame(){
        
        $(s_oMain).trigger("show_interlevel_ad");
        $(s_oMain).trigger("end_session");
-    };
-    
-    this.updateScore = function(iVal){
-        if(!_oScoreGUI){
-            return;
-        }
-
-        _oGameState.updateScore(iVal);
-
-        var iScore = _oGameState.getScore();
-
-        _oScoreGUI.refreshScore(iScore);
-        _oScoreGUI.highlight();
     };
     
     this.getCurTurn = function(){
