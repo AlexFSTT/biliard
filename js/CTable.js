@@ -1210,7 +1210,7 @@ function CTable(oParentContainer){
                                     if (_bFirstShot) {
                                             _oCueBall.setPos(CUE_BALL_POS.x, CUE_BALL_POS.y);
                                             s_oGame.changeTurn();
-                                            this.targetting(true);
+                                            _oStick.setVisible(true);
                                     }else {
                                             //if player pot 9ball, we re-spot the 9 ball
                                             if (_aBalls[9].isBallOnTable() == false) {
@@ -1416,11 +1416,6 @@ function CTable(oParentContainer){
              
             _iShotPoints = 0;
             return bEndGame;
-    };
-    
-    this.targetting = function(bValue) {
-            //m_bTargetting = bValue;
-            _oStick.setVisible(bValue);
     };
     
     this._assignSuit = function(){
