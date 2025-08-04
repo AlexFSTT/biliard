@@ -553,7 +553,7 @@ function CTable(oParentContainer){
     
     this._onPressHitArea = function(e){
         if(!_oCueBall.isBallOnTable() 
-                || (s_iPlayerMode === GAME_MODE_CPU) && (s_oGame.getCurTurn() === 2)
+                || (s_iPlayerMode === PLAYER_MODE_CPU) && (s_oGame.getCurTurn() === 2)
                 || !_oPhysicsController.areBallsStopped() 
                 || _bReadyForShot){
             return;
@@ -644,7 +644,7 @@ function CTable(oParentContainer){
     };
     
     this._onPressDownCueBall = function(oEvent){
-        if((s_iPlayerMode === GAME_MODE_CPU) && (s_oGame.getCurTurn() === 2)
+        if((s_iPlayerMode === PLAYER_MODE_CPU) && (s_oGame.getCurTurn() === 2)
             ||(_iState !== STATE_TABLE_PLACE_CUE_BALL_BREAKSHOT && _iState !== STATE_TABLE_PLACE_CUE_BALL)){
             return;
         }
@@ -1140,7 +1140,7 @@ function CTable(oParentContainer){
     this.rotateStick = function(fAngleOffset){
         if(
             (_iState === STATE_TABLE_SHOOT || _iState === STATE_TABLE_SHOOTING) 
-            || (s_iPlayerMode === GAME_MODE_CPU) && (s_oGame.getCurTurn() === 2)
+            || (s_iPlayerMode === PLAYER_MODE_CPU) && (s_oGame.getCurTurn() === 2)
             || _bReadyForShot){
             return;
         }
@@ -1191,7 +1191,7 @@ function CTable(oParentContainer){
                                                     if (_aBallsInHoleInCurShot[i] == 9) {	
                                                             _bForceStopStick = true;
                                                             _aBalls[9].setVisible(true);
-                                                            if ( s_iPlayerMode == GAME_MODE_CPU) {
+                                                            if ( s_iPlayerMode == PLAYER_MODE_CPU) {
                                                                     if (s_oGame.getCurTurn() == 2) {
                                                                             if(_aCbCompleted[ON_END_GAME]){
                                                                                 _aCbCompleted[ON_LOST].call(_aCbOwner[ON_LOST]);
@@ -1272,7 +1272,7 @@ function CTable(oParentContainer){
                             if( _aBalls[8].isBallOnTable() === false){
                                     if (_aBallsToPotPlayers[s_oGame.getCurTurn()-1] === 0) {
                                             bEndGame = true;
-                                            if ( s_iPlayerMode == GAME_MODE_CPU) {
+                                            if ( s_iPlayerMode == PLAYER_MODE_CPU) {
                                                     if (s_oGame.getCurTurn() == 2) {
                                                             if(_aCbCompleted[ON_LOST]){
                                                                 _aCbCompleted[ON_LOST].call(
@@ -1314,7 +1314,7 @@ function CTable(oParentContainer){
                                                     }
                                             }
                                     }else {
-                                            if ( s_iPlayerMode == GAME_MODE_CPU) {
+                                            if ( s_iPlayerMode == PLAYER_MODE_CPU) {
                                                     if (s_oGame.getCurTurn() == 2) {	
                                                         if(_aCbCompleted[ON_WON]){
                                                             _aCbCompleted[ON_WON].call(_aCbOwner[ON_WON], TEXT_YOU_WON, _iShotPoints);
@@ -1381,7 +1381,7 @@ function CTable(oParentContainer){
                                                                 s_oGame.setNextBallToHit(8);
                                                             }
                                                             //m_bTargetting = true;
-                                                            _oStick.setVisible(!(s_iPlayerMode === GAME_MODE_CPU && s_oGame.getCurTurn() === 2));
+                                                            _oStick.setVisible(!(s_iPlayerMode === PLAYER_MODE_CPU && s_oGame.getCurTurn() === 2));
                                                     }else{
                                                             //if a player pot first an opponent ball it's foul 
                                                             if (s_oGame.getGameState().isLegalShotFor8Ball(_aBallsInHoleInCurShot[0])) {
@@ -1413,7 +1413,7 @@ function CTable(oParentContainer){
                                                                             s_oGame.setNextBallToHit(8);
                                                                     }
                                                                     //m_bTargetting = true;
-                                                                    _oStick.setVisible(!(s_iPlayerMode === GAME_MODE_CPU && s_oGame.getCurTurn() === 2));
+                                                                    _oStick.setVisible(!(s_iPlayerMode === PLAYER_MODE_CPU && s_oGame.getCurTurn() === 2));
                                                             }else {
                                                                 s_oGame.changeTurn(true);
                                                                 bTurnChanged = true;
@@ -1436,7 +1436,7 @@ function CTable(oParentContainer){
                                                     s_oGame.changeTurn(false);
                                                     bTurnChanged = true;
                                                     //m_bTargetting = true;                                                       	
-                                                    _oStick.setVisible(!(s_iPlayerMode === GAME_MODE_CPU && s_oGame.getCurTurn() === 2));
+                                                    _oStick.setVisible(!(s_iPlayerMode === PLAYER_MODE_CPU && s_oGame.getCurTurn() === 2));
                                             }
                                     }else {
                                             for (var i = 0; i < _aBallsInHoleInCurShot.length; i++) {
@@ -1463,13 +1463,13 @@ function CTable(oParentContainer){
             }
             
             if(!_oCueBall.isDragging()){/*
-                if (( s_iPlayerMode == GAME_MODE_CPU) && (s_oGame.getCurTurn() === 1)){
+                if (( s_iPlayerMode == PLAYER_MODE_CPU) && (s_oGame.getCurTurn() === 1)){
                     _iState = STATE_TABLE_MOVE_STICK;
                 }else{
                     _iState = STATE_TABLE_SHOOT;
                 }*/
               
-                if(s_iPlayerMode === GAME_MODE_CPU){
+                if(s_iPlayerMode === PLAYER_MODE_CPU){
                         if(s_oGame.getCurTurn() === 1){
                             _iPrevState = _iState = s_bMobile ? STATE_TABLE_MOVE_STICK : STATE_TABLE_MOVE_STICK;
                              s_oGame.showShotBar();
@@ -1482,7 +1482,7 @@ function CTable(oParentContainer){
                    s_oGame.showShotBar();
                 }
             }
-            if(!(s_iPlayerMode === GAME_MODE_CPU && s_oGame.getCurTurn() === 2)){
+            if(!(s_iPlayerMode === PLAYER_MODE_CPU && s_oGame.getCurTurn() === 2)){
                 this.updateStick();
                 this.renderStickDirection();
             }
@@ -1492,7 +1492,7 @@ function CTable(oParentContainer){
             }
             
             var iPreTurn = bTurnChanged ? 2 : 1;
-             if(s_iPlayerMode === GAME_MODE_CPU && s_oGame.getCurTurn() === iPreTurn){
+             if(s_iPlayerMode === PLAYER_MODE_CPU && s_oGame.getCurTurn() === iPreTurn){
                 if(bFault){
                     _iShotPoints = POINTS_FOR_FAULT;
                 }

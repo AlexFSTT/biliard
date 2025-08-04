@@ -127,7 +127,7 @@ function CMenu(){
     };
 
     this._onButPlaySingle = function(){
-        s_iPlayerMode = GAME_MODE_CPU;
+        s_iPlayerMode = PLAYER_MODE_CPU;
         s_iGameMode = GAME_MODE_EIGHT;
         this._onExit(function(){
             s_oMenu.unload();
@@ -136,7 +136,7 @@ function CMenu(){
     };
 
     this._onButPlayTwo = function(){
-        s_iPlayerMode = GAME_MODE_TWO;
+        s_iPlayerMode = PLAYER_MODE_TWO;
         s_iGameMode = GAME_MODE_EIGHT;
         this._onExit(function(){
             s_oMenu.unload();
@@ -146,7 +146,7 @@ function CMenu(){
     };
 
     this._onButPlayTournament = function(){
-        s_iPlayerMode = GAME_MODE_TOURNAMENT;
+        s_iPlayerMode = PLAYER_MODE_TOURNAMENT;
         s_iGameMode = GAME_MODE_EIGHT;
         this._onExit(function(){
             s_oMenu.unload();
