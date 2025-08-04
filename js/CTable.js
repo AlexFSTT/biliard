@@ -305,6 +305,7 @@ function CTable(oParentContainer){
                             _aBallsInHoles.push(oBall.getNumber());
                     }
                     _aBallsInHoleInCurShot.push(oBall.getNumber());
+                    s_oGame.ballPotted(oBall.getNumber());
 
                     //_iShotPoints=_parent.checkBonus(m_iShotPoints);
             }else {
@@ -319,6 +320,7 @@ function CTable(oParentContainer){
 
                     _aBallsInHoles.push(oBall.getNumber());
                     _aBallsInHoleInCurShot.push(oBall.getNumber());
+                    s_oGame.ballPotted(oBall.getNumber());
 
             }else {
                 _bCueBallInHole = true;

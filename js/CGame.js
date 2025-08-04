@@ -9,6 +9,7 @@ function CGame(){
     var _oInterface;
     var _oTable;
     var _oContainerGame;
+    var _oBg;
     var _oContainerTable;
     var _oContainerInterface;
     
@@ -48,9 +49,14 @@ function CGame(){
         
         _oContainerGame = new createjs.Container();
         s_oStage.addChild(_oContainerGame);
-        
-        var oBg = createBitmap(s_oSpriteLibrary.getSprite("bg_game"));
-        _oContainerGame.addChild(oBg);
+
+        var oSpriteBg = s_oSpriteLibrary.getSprite("bg_game");
+        _oBg = createBitmap(oSpriteBg);
+        _oBg.regX = oSpriteBg.width/2;
+        _oBg.regY = oSpriteBg.height/2;
+        _oBg.x = CANVAS_WIDTH/2;
+        _oBg.y = CANVAS_HEIGHT/2;
+        _oContainerGame.addChild(_oBg);
 
         _oContainerTable = new createjs.Container();
         _oContainerGame.addChild(_oContainerTable);
@@ -284,13 +290,16 @@ function CGame(){
     };
     
     this.refreshButtonPos = function(){
+        _oBg.x = CANVAS_WIDTH/2 + s_iOffsetX;
+        _oBg.y = CANVAS_HEIGHT/2 + s_iOffsetY;
+
         _oInterface.refreshButtonPos();
         _oPlayer1.refreshButtonPos();
         _oPlayer2.refreshButtonPos();
         _oInputController.refreshOffsetPos();
-        
+
         _oCointainerShotPowerBarInput.x = _oContainerShotPowerBar.x = s_iOffsetX * 0.5;
-        
+
         if(_oInteractiveHelp){
             _oInteractiveHelp.refreshButtonsPos();
         }
@@ -333,15 +342,32 @@ function CGame(){
         _oGameState.assignSuits(iBallNumber);
         this.setBallInInterface(_oGameState.getSuitForPlayer(1));
     };
-    
+
     this.setBallInInterface = function(szSuites1) {
             if (szSuites1 == "solid") {
                     _oPlayer1.setBall(2);
                     _oPlayer2.setBall(15);
+                    _oPlayer1.setSuit("solid");
+                    _oPlayer2.setSuit("stripes");
             }else {
                     _oPlayer1.setBall(15);
-                    _oPlayer2.setBall(2);    
+                    _oPlayer2.setBall(2);
+                    _oPlayer1.setSuit("stripes");
+                    _oPlayer2.setSuit("solid");
             }
+    };
+
+    this.ballPotted = function(iBall){
+        if(!_oGameState.isSuitAssigned()){
+            return;
+        }
+
+        var szSuit1 = _oGameState.getSuitForPlayer(1);
+        if ((szSuit1 === "solid" && iBall < 8) || (szSuit1 === "stripes" && iBall > 8)) {
+            _oPlayer1.removeBall(iBall);
+        } else if (iBall !== 8) {
+            _oPlayer2.removeBall(iBall);
+        }
     };
     
     this.isLegalShotFor8Ball = function(iBall,iNumBallToPot) {
