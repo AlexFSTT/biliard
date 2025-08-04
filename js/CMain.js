@@ -225,16 +225,20 @@ function CMain(oData){
     };
     
     
-    this.gotoMenu = function(){
-        _oMenu = new CMenu();
-        _iState = STATE_MENU;
-    };
+      this.gotoMenu = function(){
+          document.body.classList.remove('game');
+          document.body.classList.add('menu');
+          _oMenu = new CMenu();
+          _iState = STATE_MENU;
+      };
     
-    this.gotoGame = function(){
-        _oGame = new CGame();   
-							
-        _iState = STATE_GAME;
-    };
+      this.gotoGame = function(){
+          document.body.classList.remove('menu');
+          document.body.classList.add('game');
+          _oGame = new CGame();
+
+          _iState = STATE_GAME;
+      };
     
     this.levelSelected = function(iLevel){
         s_iLevelSelected = iLevel;

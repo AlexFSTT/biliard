@@ -134,44 +134,17 @@ function sizeHandler() {
         _checkOrientation(w,h);
     }
 
-    // Use same scaling for all devices
-    var multiplier = Math.min((h / CANVAS_HEIGHT), (w / CANVAS_WIDTH));
+    // Scale to cover the entire screen without black bars
+    var multiplier = Math.max((h / CANVAS_HEIGHT), (w / CANVAS_WIDTH));
     var destW = Math.round(CANVAS_WIDTH * multiplier);
     var destH = Math.round(CANVAS_HEIGHT * multiplier);
-
-    //var iAdd = 0;
-   // if (destH < h){
-   //     iAdd = h-destH;
-   //     destH += iAdd;
-   //     destW += iAdd*(CANVAS_WIDTH/CANVAS_HEIGHT);
-   // }else  if (destW < w){
-   //     iAdd = w-destW;
-   //     destW += iAdd;
-   //     destH += iAdd*(CANVAS_HEIGHT/CANVAS_WIDTH);
-   // }
 
     var fOffsetY = ((h / 2) - (destH / 2));
     var fOffsetX = ((w / 2) - (destW / 2));
     var fGameInverseScaling = (CANVAS_WIDTH/destW);
 
-    if( fOffsetX*fGameInverseScaling < -EDGEBOARD_X ||  
-        fOffsetY*fGameInverseScaling < -EDGEBOARD_Y ){
-        multiplier = Math.min( h / (CANVAS_HEIGHT-(EDGEBOARD_Y*2)), w / (CANVAS_WIDTH-(EDGEBOARD_X*2)));
-        destW = Math.round(CANVAS_WIDTH * multiplier);
-        destH = Math.round(CANVAS_HEIGHT * multiplier);
-        fOffsetY = ( h - destH ) / 2;
-        fOffsetX = ( w - destW ) / 2;
-    }
-
     s_iOffsetX = (-1*fOffsetX * fGameInverseScaling);
     s_iOffsetY = (-1*fOffsetY * fGameInverseScaling);
-
-    if(fOffsetY >= 0 ){
-        s_iOffsetY = 0;
-    }
-    if(fOffsetX >= 0 ){
-        s_iOffsetX = 0;
-    }
 
     if(s_oGame !== null){
         s_oGame.refreshButtonPos( );

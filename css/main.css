@@ -4,8 +4,17 @@ root {
 
 body{
     background-color: #000;
-    background-repeat: repeat-x;
-    background-position: top;   
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+body.menu{
+    background-image: url('../sprites/bg_menu.jpg');
+}
+
+body.game{
+    background-image: url('../sprites/bg_game.jpg');
 }
 
 *, *:before, *:after {
