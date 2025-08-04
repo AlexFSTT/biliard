@@ -28,8 +28,9 @@ function CMenu(){
         var spacingY = 40;
         var totalWidth = _cardW * 2 + spacingX;
         var totalHeight = _cardH * 2 + spacingY;
-        var startX = (CANVAS_WIDTH - totalWidth) / 2;
-        var startY = CANVAS_HEIGHT - totalHeight - 100;
+        // Center the first card horizontally and anchor the grid near the bottom
+        var startX = (CANVAS_WIDTH - totalWidth) / 2 + _cardW / 2;
+        var startY = CANVAS_HEIGHT - totalHeight - 100 + _cardH / 2;
 
         _aCardStartPos = [
             {x: startX, y: startY},
