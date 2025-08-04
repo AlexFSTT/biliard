@@ -20,13 +20,16 @@ function CMenu(){
         _oBg = createBitmap(s_oSpriteLibrary.getSprite('bg_menu'));
         s_oStage.addChild(_oBg);
 
-        // Play buttons (moved higher by reducing y value)
-        _pStartPosButTwo = {x: CANVAS_WIDTH/2 - 250, y: CANVAS_HEIGHT - 220};
-        _oButPlayTwo = new CGfxButton(_pStartPosButTwo.x, _pStartPosButTwo.y, s_oSpriteLibrary.getSprite('vs_man_panel'), s_oStage);
+        // Play buttons
+        var iButtonSpacing = 40;
+        var oSpriteTwo = s_oSpriteLibrary.getSprite('vs_man_panel');
+        _pStartPosButTwo = {x: CANVAS_WIDTH/2 - (oSpriteTwo.width/2) - iButtonSpacing/2, y: CANVAS_HEIGHT - 220};
+        _oButPlayTwo = new CGfxButton(_pStartPosButTwo.x, _pStartPosButTwo.y, oSpriteTwo, s_oStage);
         _oButPlayTwo.addEventListener(ON_MOUSE_UP, this._onButPlayTwo, this);
 
-        _pStartPosButTournament = {x: CANVAS_WIDTH/2 + 250, y: CANVAS_HEIGHT - 220};
-        _oButPlayTournament = new CGfxButton(_pStartPosButTournament.x, _pStartPosButTournament.y, s_oSpriteLibrary.getSprite('vs_pc_panel'), s_oStage);
+        var oSpriteTournament = s_oSpriteLibrary.getSprite('vs_pc_panel');
+        _pStartPosButTournament = {x: CANVAS_WIDTH/2 + (oSpriteTournament.width/2) + iButtonSpacing/2, y: CANVAS_HEIGHT - 220};
+        _oButPlayTournament = new CGfxButton(_pStartPosButTournament.x, _pStartPosButTournament.y, oSpriteTournament, s_oStage);
         _oButPlayTournament.addEventListener(ON_MOUSE_UP, this._onButPlayTournament, this);
 
         // Audio toggle
