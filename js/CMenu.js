@@ -7,7 +7,6 @@ function CMenu(){
 
     var _oBg;
     var _oButPlayTwo;
-    var _oButTournament;
     var _oAudioToggle;
     var _oButCredits;
     var _oFade;
@@ -24,10 +23,6 @@ function CMenu(){
         _pStartPosButTwo = {x: CANVAS_WIDTH/2 - 250, y: CANVAS_HEIGHT - 220};
         _oButPlayTwo = new CGfxButton(_pStartPosButTwo.x, _pStartPosButTwo.y, s_oSpriteLibrary.getSprite('vs_man_panel'), s_oStage);
         _oButPlayTwo.addEventListener(ON_MOUSE_UP, this._onButPlayTwo, this);
-
-        _pStartPosButTournament = {x: CANVAS_WIDTH/2 + 250, y: CANVAS_HEIGHT - 220};
-        _oButTournament = new CTextButton(_pStartPosButTournament.x, _pStartPosButTournament.y, s_oSpriteLibrary.getSprite('but_play'), 'TOURNAMENT', FONT_GAME, PRIMARY_FONT_COLOR, 40, "center", s_oStage);
-        _oButTournament.addEventListener(ON_MOUSE_UP, this._onButTournament, this);
 
         // Audio toggle
         if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
@@ -90,7 +85,6 @@ function CMenu(){
     this.unload = function(){
         _oButCredits.unload();
         _oButPlayTwo.unload();
-        _oButTournament.unload();
 
         if(DISABLE_SOUND_MOBILE === false || s_bMobile === false){
             _oAudioToggle.unload();
@@ -115,7 +109,6 @@ function CMenu(){
         }
         _oButCredits.setPosition(_pStartPosCredits.x + s_iOffsetX, _pStartPosCredits.y + s_iOffsetY);
         _oButPlayTwo.setPosition(_pStartPosButTwo.x, _pStartPosButTwo.y - s_iOffsetY);
-        _oButTournament.setPosition(_pStartPosButTournament.x, _pStartPosButTournament.y - s_iOffsetY);
     };
 
     this._onButPlayTwo = function(){
@@ -126,12 +119,6 @@ function CMenu(){
             s_oMain.gotoGame();
             $(s_oMain).trigger("start_session");
         });
-    };
-
-    this._onButTournament = function(){
-        var oMsgBoxPanel = new CAreYouSurePanel();
-        oMsgBoxPanel.changeMessage("TOURNAMENT MODE COMING SOON", -170);
-        oMsgBoxPanel.setOneButton();
     };
 
     this._onButCreditsRelease = function(){
