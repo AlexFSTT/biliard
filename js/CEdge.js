@@ -47,7 +47,9 @@ function CEdge(xA, yA, xB, yB, iID) {
     };
 
     this.toString = function (sz) {
-        console.log(sz + " " + m_pA.x + " " + m_pA.y + " " + m_pB.x + " " + m_pB.y);
+        if (s_bDebug) {
+            console.log(sz + " " + m_pA.x + " " + m_pA.y + " " + m_pB.x + " " + m_pB.y);
+        }
     };
 
     this.add = function (vAdd) {

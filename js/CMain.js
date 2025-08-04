@@ -336,7 +336,9 @@ function CMain(oData){
     
     var iLang = navigator.language.split("-")[0];
     s_iCurLang = LANG_CODES[iLang];
-    console.log("LANG_CODES["+navigator.language+"] "+s_iCurLang);
+    if (s_bDebug) {
+        console.log("LANG_CODES["+navigator.language+"] "+s_iCurLang);
+    }
     refreshLanguage();
     
     this.initContainer();
