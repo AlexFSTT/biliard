@@ -548,6 +548,7 @@ function CTable(oParentContainer){
     };
     
     this.startToShot = function(){
+         s_oGame.stopTurnTimer();
          _oHandCueBallDrag.hide();
         _iState = STATE_TABLE_MOVE_STICK;
         _bHoldStick = true;
