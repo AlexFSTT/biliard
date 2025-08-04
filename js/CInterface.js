@@ -101,6 +101,8 @@ function CInterface(oParentContainer){
     this.resetSpin = function(){
         _oBallSpinGUI.resetSpin();
     };
+
+    this.updateScore = function(iScore){};
     
     this.getSideSpin = function(){
         return _oBallSpinGUI.getSideSpin();

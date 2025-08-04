@@ -357,6 +357,10 @@ function CGame(){
         _oGameState.resetWinStreak();
         //oWinStreak.text = "Win Streak: "+_oGameState.toJSON().winStreak;
     };
+
+    this.updateScore = function(iVal){
+        _oGameState.updateScore(iVal);
+    };
       
     this.gameOver = function(szText){
         _oGameOverPanel.show(szText);
