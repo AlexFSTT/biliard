@@ -233,15 +233,10 @@ function CMain(oData){
         _oMenu = new CMenu();
         _iState = STATE_MENU;
     };
-    
-    this.gotoDifficultyMenu = function(){
-        _oDifficultyMenu = new CDifficutlyMenu();
-        _iState = STATE_MENU;
-    };
 
     this.gotoGame = function(){
-        _oGame = new CGame();   
-							
+        _oGame = new CGame();
+
         _iState = STATE_GAME;
     };
     
@@ -364,6 +359,6 @@ var s_bStorageAvailable = true;
 var s_bInteractiveHelp = true;
 var s_aSoundsInfo;
 var s_iGameMode = GAME_MODE_EIGHT;
-var s_iPlayerMode = GAME_MODE_CPU;
+var s_iPlayerMode = GAME_MODE_TWO;
 var s_iCurLang = LANG_EN;
-var s_iGameDifficulty = EASY;
+var s_iGameDifficulty = 0;

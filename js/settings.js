@@ -35,8 +35,7 @@ var GAME_MODE_EIGHT = 0;
 var GAME_MODE_NINE = 1;
 var GAME_MODE_TIME = 2;
 
-var GAME_MODE_CPU = 0;
-var GAME_MODE_TWO = 1;
+var GAME_MODE_TWO = 0;
 
 var STATE_TABLE_PLACE_CUE_BALL_BREAKSHOT  = 0;
 var STATE_TABLE_PLACE_CUE_BALL = 1;
@@ -57,34 +56,6 @@ var PREVISION_TRAJECTORY_COLORS = [
                                         ["#00f", "#f00"]
                                   ];
                                   
-var EASY   = 0;
-var MEDIUM = 1;
-var HARD   = 2;
-
-var GAME_DIFFICULTY_PARAMS = [];
-GAME_DIFFICULTY_PARAMS[EASY] = [
-                                    {max: 0.99, min: 0.9},
-                                    {max: 0.9, min: 0.85},
-                                    {max: 0.87,  min: 0.8},
-                                    {max: 0.8, min: 0.75},
-                                    {max: 0.7,  min: 0.6}
-                                ];
-                                
-GAME_DIFFICULTY_PARAMS[MEDIUM] = [
-                                    {max: 0.99, min: 0.95},
-                                    {max: 0.97, min: 0.93},
-                                    {max: 0.9,  min: 0.87},
-                                    {max: 0.85, min: 0.8},
-                                    {max: 0.83,  min: 0.8}
-                                ];
-                                
-GAME_DIFFICULTY_PARAMS[HARD] = [
-                                    {max: 0.99, min: 0.99},
-                                    {max: 0.99, min: 0.97},
-                                    {max: 0.97,  min: 0.95},
-                                    {max: 0.95, min: 0.93},
-                                    {max: 0.93,  min: 0.9}
-                                ];
 
 var TABLE_CENTER;
 var TABLE_CENTER_COORDINATE;
@@ -159,17 +130,6 @@ var HOLE_CENTER_POS = [
                         {x:640, y:639},
                         {x:95,  y:628}
                     ];
-
-var HOLE_CPU_POINTS = [
-                        {x:105, y:97},
-                        {x:640, y:80},
-                        {x:1173,y:97},
-                        {x:1173,y:613},
-                        {x:640, y:632},
-                        {x:105, y:613}
-                    ];
-
-var MAX_FORCE_PER_DISTANCE = 850;
 
 var TABLE_UPPER_BUMPER = [
                            {x: 366,  y: 63, sprite: "bumper_top_left", regX: 2, regY: 0},
@@ -296,7 +256,6 @@ var DEBUG_SHOW_TABLE_CENTER_SHAPE    = false;
 var DEBUG_SHOW_HOLE_CENTER_POS_SHAPE = false;
 var DEBUG_SHOW_EDGE_TABLE            = false;
 var DEBUG_SHOW_RECT_COLLISION        = false;
-var DEBUG_SHOW_CPU_BALL_TRAJECTORY   = false;
 var DEBUG_SHOW_PREDICT_TRAJECTORY_COLLISION = false;
 var SHOW_TRAJECTORY_UNSUCCESSFUL_SHOTS = false;
 

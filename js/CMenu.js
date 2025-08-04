@@ -119,11 +119,12 @@ function CMenu(){
     };
 
     this._onButPlaySingle = function(){
-        s_iPlayerMode = GAME_MODE_CPU;
+        s_iPlayerMode = GAME_MODE_TWO;
         s_iGameMode = GAME_MODE_EIGHT;
         this._onExit(function(){
             s_oMenu.unload();
-            s_oMain.gotoDifficultyMenu();
+            s_oMain.gotoGame();
+            $(s_oMain).trigger("start_session");
         });
     };
 

@@ -70,7 +70,7 @@ function CGame(){
         _oInterface = new CInterface(_oContainerInterface);
         _oScenario = new CScene();
 
-        _oTable = new CTable(_oContainerTable, GAME_DIFFICULTY_PARAMS[s_iGameDifficulty]);
+        _oTable = new CTable(_oContainerTable);
         _oTable.addEventListener(ON_LOST,this.gameOver,this);
         _oTable.addEventListener(ON_WON,this.showWinPanel,this);
         
@@ -80,9 +80,6 @@ function CGame(){
         
         _oPlayer1  = new CPlayerGUI(CANVAS_WIDTH/2 - 400, iY,TEXT_PLAYER1,s_oStage);
         _oPlayer2  = new CPlayerGUI(CANVAS_WIDTH/2 + 400, iY,TEXT_PLAYER2,s_oStage);
-        if(s_iPlayerMode === GAME_MODE_CPU){
-            _oScoreGUI = new CScoreGUI(CANVAS_WIDTH/2, iY, s_oStage);
-        }
         
         if (_iCurTurn === 1) {
                 _oPlayer1.highlight();
@@ -330,9 +327,7 @@ function CGame(){
             if (_iCurTurn === 1) {
                     _iCurTurn = 2;
                     
-                    if(!s_oTable.isCpuTurn()){
-                        s_oGame.showShotBar();
-                    }
+                    s_oGame.showShotBar();
                     
                     _oPlayer2.highlight();
                     _oPlayer1.unlight();
@@ -426,9 +421,7 @@ function CGame(){
     };
     
     this.showWinPanel = function(szText){
-        var iScore = s_iGameMode === GAME_MODE_CPU ? _iScore : undefined;
-        
-        _oGameOverPanel.show(szText, iScore);
+        _oGameOverPanel.show(szText);
         $("#canvas_upper_3d").css("pointer-events", "initial");
         _bUpdate = false;
     };

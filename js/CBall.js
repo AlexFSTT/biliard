@@ -94,7 +94,7 @@ function CBall(iType,oParentContainer, oTexture){
         return _oBall3D;
     };
     
-    this.render = function(isCpuTurn){
+    this.render = function(){
         _oContainer.x = _vPos.getX();
         _oContainer.y = _vPos.getY();
     };
