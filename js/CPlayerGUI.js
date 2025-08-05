@@ -88,19 +88,19 @@ function CPlayerGUI(iX,iY,szName,oParentContainer){
         var iScale = 0.4;
         var iSpacing = BALL_DIAMETER * iScale + 5;
         var iStartX = _oSpriteBg.width/2 - (aBalls.length * iSpacing)/2 + (BALL_DIAMETER * iScale)/2;
+        var iYPos = _oSpriteBg.height - BALL_DIAMETER * iScale/2 - 10;
 
         for(var i=0; i<aBalls.length; i++){
             var iBallNum = aBalls[i];
             var oIcon = createSprite(_oBallSpriteSheet, "ball_"+iBallNum, BALL_DIAMETER/2, BALL_DIAMETER/2, BALL_DIAMETER, BALL_DIAMETER);
             oIcon.scaleX = oIcon.scaleY = iScale;
             oIcon.x = iStartX + i * iSpacing;
-            oIcon.y = _oSpriteBg.height + 10 + BALL_DIAMETER * iScale/2;
+            oIcon.y = iYPos;
             _oBallsContainer.addChild(oIcon);
             _aBallIcons[iBallNum] = oIcon;
         }
 
-        var szLabel = (szSuit === "solid") ? "SOLIDS" : "STRIPES";
-        _oTextName.refreshText(_szName + " - " + szLabel);
+        _oTextName.refreshText(_szName);
     };
 
     this.removeBall = function(iBall){
