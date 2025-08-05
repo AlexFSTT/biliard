@@ -258,8 +258,10 @@ function CGame(){
             _iTurnTime--;
             _oTimerText.refreshText(_iTurnTime);
             if(_iTurnTime <= 0){
+                // treat timeout as a fault: opponent gets ball in hand
                 s_oGame.stopTurnTimer();
-                s_oGame.changeTurn(false);
+                s_oTable.respotCueBall();
+                s_oGame.changeTurn(true);
             }
         },1000);
     };
