@@ -94,11 +94,11 @@ function CPlayerGUI(iX,iY,szName,oParentContainer){
             var iBallNum = aBalls[i];
             var oIcon = createSprite(_oBallSpriteSheet, "ball_"+iBallNum, BALL_DIAMETER/2, BALL_DIAMETER/2, BALL_DIAMETER, BALL_DIAMETER);
             oIcon.scaleX = oIcon.scaleY = iScale;
-            oIcon.x = iStartX + i * iSpacing;
-            oIcon.y = iYPos;
             _oBallsContainer.addChild(oIcon);
             _aBallIcons[iBallNum] = oIcon;
         }
+
+        this._repositionBallIcons();
 
         _oTextName.refreshText(_szName);
     };
@@ -107,6 +107,26 @@ function CPlayerGUI(iX,iY,szName,oParentContainer){
         if(_aBallIcons && _aBallIcons[iBall]){
             _oBallsContainer.removeChild(_aBallIcons[iBall]);
             delete _aBallIcons[iBall];
+            this._repositionBallIcons();
+        }
+    };
+
+    this._repositionBallIcons = function(){
+        if(!_aBallIcons){
+            return;
+        }
+        var iScale = 0.4;
+        var iSpacing = BALL_DIAMETER * iScale + 5;
+        var aBallNums = Object.keys(_aBallIcons).map(Number).sort(function(a,b){return a-b;});
+        var iStartX = _oSpriteBg.width/2 - (aBallNums.length * iSpacing)/2 + (BALL_DIAMETER * iScale)/2;
+        var iYPos = _oSpriteBg.height - BALL_DIAMETER * iScale/2 - 10;
+
+        for(var i=0; i<aBallNums.length; i++){
+            var iBallNum = aBallNums[i];
+            var oIcon = _aBallIcons[iBallNum];
+            oIcon.scaleX = oIcon.scaleY = iScale;
+            oIcon.x = iStartX + i * iSpacing;
+            oIcon.y = iYPos;
         }
     };
     
