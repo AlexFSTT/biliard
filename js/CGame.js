@@ -416,9 +416,9 @@ function CGame(){
 
         var szSuit1 = _oGameState.getSuitForPlayer(1);
         if ((szSuit1 === "solid" && iBall < 8) || (szSuit1 === "stripes" && iBall > 8)) {
-            _oPlayer1.removeBall(iBall);
+            _oPlayer1.addBall(iBall);
         } else if (iBall !== 8) {
-            _oPlayer2.removeBall(iBall);
+            _oPlayer2.addBall(iBall);
         }
     };
     

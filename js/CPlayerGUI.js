@@ -7,6 +7,7 @@ function CPlayerGUI(iX,iY,szName,oParentContainer){
     var _oBallSpriteSheet;
     var _oBallsContainer;
     var _aBallIcons;
+    var _szSuit;
     var _oHighlight;
     var _oContainer;
     var _oSpriteBg;
@@ -83,30 +84,20 @@ function CPlayerGUI(iX,iY,szName,oParentContainer){
         _oBallsContainer = new createjs.Container();
         _oContainer.addChild(_oBallsContainer);
         _aBallIcons = {};
-
-        var aBalls = (szSuit === "solid") ? [1,2,3,4,5,6,7] : [9,10,11,12,13,14,15];
-        var iScale = 0.4;
-        var iSpacing = BALL_DIAMETER * iScale + 5;
-        var iStartX = _oSpriteBg.width/2 - (aBalls.length * iSpacing)/2 + (BALL_DIAMETER * iScale)/2;
-        var iYPos = _oSpriteBg.height - BALL_DIAMETER * iScale/2 - 10;
-
-        for(var i=0; i<aBalls.length; i++){
-            var iBallNum = aBalls[i];
-            var oIcon = createSprite(_oBallSpriteSheet, "ball_"+iBallNum, BALL_DIAMETER/2, BALL_DIAMETER/2, BALL_DIAMETER, BALL_DIAMETER);
-            oIcon.scaleX = oIcon.scaleY = iScale;
-            _oBallsContainer.addChild(oIcon);
-            _aBallIcons[iBallNum] = oIcon;
-        }
+        _szSuit = szSuit;
 
         this._repositionBallIcons();
 
         _oTextName.refreshText(_szName);
     };
 
-    this.removeBall = function(iBall){
-        if(_aBallIcons && _aBallIcons[iBall]){
-            _oBallsContainer.removeChild(_aBallIcons[iBall]);
-            delete _aBallIcons[iBall];
+    this.addBall = function(iBall){
+        if(!_aBallIcons[iBall]){
+            var iScale = 0.4;
+            var oIcon = createSprite(_oBallSpriteSheet, "ball_"+iBall, BALL_DIAMETER/2, BALL_DIAMETER/2, BALL_DIAMETER, BALL_DIAMETER);
+            oIcon.scaleX = oIcon.scaleY = iScale;
+            _oBallsContainer.addChild(oIcon);
+            _aBallIcons[iBall] = oIcon;
             this._repositionBallIcons();
         }
     };
